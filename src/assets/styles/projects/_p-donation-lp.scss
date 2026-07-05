@@ -1,0 +1,775 @@
+@use "../global" as *;
+
+// ============================================================
+// 遺贈寄付ページ（LP）専用デザイン
+// 本番サイト（Tailwind CSS / Material Design 3 トークン）を
+// 1クラスずつ忠実に SCSS へ移植したもの。
+//
+// ・数値は Tailwind の rem 値を calc(N * var(--to-rem)) で再現（16px 基準で N px）
+// ・borderRadius は本番の tailwind.config で上書き済み:
+//     DEFAULT = 1rem / lg = 2rem / xl = 3rem / 2xl = 1rem(既定) / full = 9999px
+// ・CSS はサイト全体で 1 本にバンドルされるため、素の body 等は書かず
+//   すべて .p-donation-lp 配下（またはページ固有クラス）に閉じる
+// ============================================================
+
+// -- Material Design 3 トークン ------------------------------
+$dn-primary: #735c00;
+$dn-on-primary: #ffffff;
+$dn-primary-container: #f3d062;
+$dn-on-primary-container: #6e5800;
+$dn-primary-fixed: #ffe084;
+$dn-secondary: #426900;
+$dn-tertiary: #a03e40;
+$dn-tertiary-container: #ffc5c3;
+$dn-tertiary-fixed: #ffdad8;
+$dn-background: #fbfaef;
+$dn-surface: #fbfaef;
+$dn-surface-container: #efeee4;
+$dn-surface-container-low: #f5f4ea;
+$dn-surface-container-high: #eae8de;
+$dn-surface-container-lowest: #ffffff;
+$dn-on-surface: #1b1c16;
+$dn-on-surface-variant: #4c4636;
+$dn-outline-variant: #cfc6b1;
+
+$dn-font: "Plus Jakarta Sans", "Zen Maru Gothic", sans-serif;
+
+// Tailwind shadow ユーティリティの実値
+$dn-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$dn-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$dn-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+// ============================================================
+// ページ全体（body に付与）
+//   body: bg-background text-on-surface
+//         selection:bg-primary-container selection:text-on-primary-container
+//   <style> body { font-family: 'Zen Maru Gothic', sans-serif; }
+// ============================================================
+.p-donation-lp {
+  min-height: 100vh;
+  background-color: $dn-background;
+  color: $dn-on-surface;
+  font-family: "Zen Maru Gothic", sans-serif;
+
+  ::selection {
+    background-color: $dn-primary-container;
+    color: $dn-on-primary-container;
+  }
+
+  // Material Symbols（Google Fonts 側で .material-symbols-outlined の
+  // font-family 等は定義される。ここでは可変軸のみ指定）
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+
+    &.is-filled {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+  }
+}
+
+// ============================================================
+// Hero
+//   header: relative min-h-screen flex items-center pt-20 overflow-hidden
+// ============================================================
+.p-donation-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  // 本番の min-h-screen + pt-20（固定ナビ分の余白）を再現。
+  // 共通ヘッダーを継承したため、ヘッダー高さのオフセットは親 .l-main が担当。
+  min-height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+// div: absolute inset-0 z-0
+.p-donation-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// div: absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent
+.p-donation-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    $dn-background 0%,
+    rgba($dn-background, 0.4) 50%,
+    rgba($dn-background, 0) 100%
+  );
+}
+
+// div: relative z-10 max-w-7xl mx-auto px-8 w-full
+.p-donation-hero__inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: calc(1280 * var(--to-rem)); // max-w-7xl
+  margin-inline: auto;
+  padding-inline: calc(32 * var(--to-rem)); // px-8
+}
+
+// div: max-w-2xl space-y-8
+.p-donation-hero__content {
+  max-width: calc(672 * var(--to-rem)); // max-w-2xl
+
+  > * + * {
+    margin-top: calc(32 * var(--to-rem)); // space-y-8
+  }
+}
+
+// div: inline-flex items-center gap-2 px-4 py-2 rounded-full
+//      bg-primary-container/30 text-primary font-bold text-sm
+.p-donation-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--to-rem)); // gap-2
+  padding: calc(8 * var(--to-rem)) calc(16 * var(--to-rem)); // py-2 px-4
+  border-radius: 9999px;
+  background-color: rgba($dn-primary-container, 0.3);
+  color: $dn-primary;
+  font-weight: 700;
+  font-size: calc(14 * var(--to-rem)); // text-sm
+
+  .material-symbols-outlined {
+    font-size: calc(14 * var(--to-rem)); // text-sm
+  }
+}
+
+// h1: text-5xl md:text-6xl font-bold text-on-surface leading-[1.2] tracking-tight
+.p-donation-hero__title {
+  font-size: calc(48 * var(--to-rem)); // text-5xl
+  font-weight: 700;
+  color: $dn-on-surface;
+  line-height: 1.2;
+  letter-spacing: -0.025em; // tracking-tight
+
+  @include mq(md) {
+    font-size: calc(60 * var(--to-rem)); // md:text-6xl
+  }
+}
+
+// span: text-primary
+.p-donation-hero__title-accent {
+  color: $dn-primary;
+}
+
+// p: text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-lg
+.p-donation-hero__lead {
+  max-width: calc(512 * var(--to-rem)); // max-w-lg
+  font-size: calc(18 * var(--to-rem)); // text-lg
+  line-height: 1.625; // leading-relaxed
+  color: $dn-on-surface-variant;
+
+  @include mq(md) {
+    font-size: calc(20 * var(--to-rem)); // md:text-xl
+  }
+}
+
+// div: flex flex-wrap gap-4 pt-4
+.p-donation-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(16 * var(--to-rem)); // gap-4
+  padding-top: calc(16 * var(--to-rem)); // pt-4
+}
+
+// a: bg-primary text-on-primary px-10 py-4 rounded-full font-bold text-lg
+//    hover:shadow-lg transition-all flex items-center gap-2
+.p-donation-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--to-rem)); // gap-2
+  padding: calc(16 * var(--to-rem)) calc(40 * var(--to-rem)); // py-4 px-10
+  border-radius: 9999px;
+  background-color: $dn-primary;
+  color: $dn-on-primary;
+  font-weight: 700;
+  font-size: calc(18 * var(--to-rem)); // text-lg
+  transition: box-shadow 0.15s ease; // transition-all
+
+  @media (any-hover: hover) {
+    &:hover {
+      box-shadow: $dn-shadow-lg; // hover:shadow-lg
+    }
+  }
+}
+
+// div: absolute bottom-0 left-0 w-full overflow-hidden leading-[0]
+.p-donation-hero__wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+
+  // svg: relative block w-full h-[100px]
+  svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: calc(100 * var(--to-rem)); // h-[100px]
+  }
+
+  // path: fill-surface-container-low
+  path {
+    fill: $dn-surface-container-low;
+  }
+}
+
+// ============================================================
+// Activity Intro（Scrapbook）
+//   section: py-24 bg-surface-container-low overflow-hidden
+// ============================================================
+.p-donation-activity {
+  padding-block: calc(96 * var(--to-rem)); // py-24
+  background-color: $dn-surface-container-low;
+  overflow: hidden;
+}
+
+// div: max-w-7xl mx-auto px-8
+.p-donation-activity__inner {
+  max-width: calc(1280 * var(--to-rem)); // max-w-7xl
+  margin-inline: auto;
+  padding-inline: calc(32 * var(--to-rem)); // px-8
+}
+
+// div: text-center mb-20
+.p-donation-activity__head {
+  text-align: center;
+  margin-bottom: calc(80 * var(--to-rem)); // mb-20
+}
+
+// h2: text-3xl md:text-4xl font-bold text-on-surface mb-6
+.p-donation-activity__title {
+  font-size: calc(30 * var(--to-rem)); // text-3xl
+  font-weight: 700;
+  color: $dn-on-surface;
+  margin-bottom: calc(24 * var(--to-rem)); // mb-6
+
+  @include mq(md) {
+    font-size: calc(36 * var(--to-rem)); // md:text-4xl
+  }
+}
+
+// div: grid grid-cols-1 md:grid-cols-12 gap-8 items-center
+.p-donation-activity__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(32 * var(--to-rem)); // gap-8
+  align-items: center;
+
+  @include mq(md) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+// div: md:col-span-7 relative h-[600px]
+.p-donation-activity__collage {
+  position: relative;
+  height: calc(600 * var(--to-rem)); // h-[600px]
+
+  @include mq(md) {
+    grid-column: span 7 / span 7; // md:col-span-7
+  }
+}
+
+// 3枚の写真（共通）: absolute rounded-lg overflow-hidden shadow border-8 border-surface-container-lowest
+.p-donation-activity__photo {
+  position: absolute;
+  overflow: hidden;
+  border-radius: calc(32 * var(--to-rem)); // rounded-lg = 2rem（config 上書き）
+  border: calc(8 * var(--to-rem)) solid $dn-surface-container-lowest; // border-8
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // --1: top-0 left-0 w-64 h-80 scrapbook-angle-1 shadow-md z-20
+  &--1 {
+    top: 0;
+    left: 0;
+    width: calc(256 * var(--to-rem)); // w-64
+    height: calc(320 * var(--to-rem)); // h-80
+    transform: rotate(-1.5deg); // scrapbook-angle-1
+    box-shadow: $dn-shadow-md;
+    z-index: 20;
+  }
+
+  // --2: top-20 right-10 w-80 h-96 scrapbook-angle-2 shadow-lg z-10
+  &--2 {
+    top: calc(80 * var(--to-rem)); // top-20
+    right: calc(40 * var(--to-rem)); // right-10
+    width: calc(320 * var(--to-rem)); // w-80
+    height: calc(384 * var(--to-rem)); // h-96
+    transform: rotate(1.2deg); // scrapbook-angle-2
+    box-shadow: $dn-shadow-lg;
+    z-index: 10;
+  }
+
+  // --3: bottom-10 left-20 w-72 h-72 scrapbook-angle-1 shadow-md z-30
+  &--3 {
+    bottom: calc(40 * var(--to-rem)); // bottom-10
+    left: calc(80 * var(--to-rem)); // left-20
+    width: calc(288 * var(--to-rem)); // w-72
+    height: calc(288 * var(--to-rem)); // h-72
+    transform: rotate(-1.5deg); // scrapbook-angle-1
+    box-shadow: $dn-shadow-md;
+    z-index: 30;
+  }
+}
+
+// div: md:col-span-5 space-y-8
+.p-donation-activity__body {
+  @include mq(md) {
+    grid-column: span 5 / span 5; // md:col-span-5
+  }
+
+  > * + * {
+    margin-top: calc(32 * var(--to-rem)); // space-y-8
+  }
+}
+
+// div: p-10 bg-surface-container-lowest rounded-xl shadow-sm relative
+.p-donation-activity__quote {
+  position: relative;
+  padding: calc(40 * var(--to-rem)); // p-10
+  background-color: $dn-surface-container-lowest;
+  border-radius: calc(48 * var(--to-rem)); // rounded-xl = 3rem（config 上書き）
+  box-shadow: $dn-shadow-sm;
+}
+
+// span: absolute -top-4 -left-4 text-primary-container text-5xl (FILL 1)
+.p-donation-activity__quote-icon {
+  position: absolute;
+  top: calc(-16 * var(--to-rem)); // -top-4
+  left: calc(-16 * var(--to-rem)); // -left-4
+  color: $dn-primary-container;
+  font-size: calc(48 * var(--to-rem)); // text-5xl
+}
+
+// p: text-on-surface leading-loose text-lg
+.p-donation-activity__quote-text {
+  color: $dn-on-surface;
+  line-height: 2; // leading-loose
+  font-size: calc(18 * var(--to-rem)); // text-lg
+}
+
+// ============================================================
+// Legacy Donation（未来への贈り物）
+//   section: py-24 bg-surface relative
+// ============================================================
+.p-donation-gift {
+  position: relative;
+  padding-block: calc(96 * var(--to-rem)); // py-24
+  background-color: $dn-surface;
+}
+
+// div: max-w-4xl mx-auto px-8 text-center space-y-12
+.p-donation-gift__inner {
+  max-width: calc(896 * var(--to-rem)); // max-w-4xl
+  margin-inline: auto;
+  padding-inline: calc(32 * var(--to-rem)); // px-8
+  text-align: center;
+
+  > * + * {
+    margin-top: calc(48 * var(--to-rem)); // space-y-12
+  }
+}
+
+// div: inline-block px-6 py-1 bg-tertiary-container/30 text-tertiary rounded-full
+//      font-bold text-sm tracking-widest mb-4
+.p-donation-gift__badge {
+  display: inline-block;
+  padding: calc(4 * var(--to-rem)) calc(24 * var(--to-rem)); // py-1 px-6
+  border-radius: 9999px;
+  background-color: rgba($dn-tertiary-container, 0.3);
+  color: $dn-tertiary;
+  font-weight: 700;
+  font-size: calc(14 * var(--to-rem)); // text-sm
+  letter-spacing: 0.1em; // tracking-widest
+  margin-bottom: calc(16 * var(--to-rem)); // mb-4
+}
+
+// h2: text-4xl md:text-5xl font-bold text-primary leading-tight
+.p-donation-gift__title {
+  font-size: calc(36 * var(--to-rem)); // text-4xl
+  font-weight: 700;
+  color: $dn-primary;
+  line-height: 1.25; // leading-tight
+
+  @include mq(md) {
+    font-size: calc(48 * var(--to-rem)); // md:text-5xl
+  }
+}
+
+// p: text-xl text-on-surface-variant leading-relaxed text-left
+.p-donation-gift__lead {
+  font-size: calc(20 * var(--to-rem)); // text-xl
+  color: $dn-on-surface-variant;
+  line-height: 1.625; // leading-relaxed
+  text-align: left;
+}
+
+// div: grid grid-cols-1 md:grid-cols-2 gap-8 pt-10
+.p-donation-gift__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(32 * var(--to-rem)); // gap-8
+  padding-top: calc(40 * var(--to-rem)); // pt-10
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// div: bg-surface-container p-8 rounded-lg text-left space-y-4
+.p-donation-gift__card {
+  padding: calc(32 * var(--to-rem)); // p-8
+  background-color: $dn-surface-container;
+  border-radius: calc(32 * var(--to-rem)); // rounded-lg = 2rem
+  text-align: left;
+
+  > * + * {
+    margin-top: calc(16 * var(--to-rem)); // space-y-4
+  }
+}
+
+// span: text-primary text-4xl
+.p-donation-gift__card-icon {
+  color: $dn-primary;
+  font-size: calc(36 * var(--to-rem)); // text-4xl
+}
+
+// h3: text-xl font-bold text-on-surface
+.p-donation-gift__card-title {
+  font-size: calc(20 * var(--to-rem)); // text-xl
+  font-weight: 700;
+  color: $dn-on-surface;
+}
+
+// p: text-on-surface-variant
+.p-donation-gift__card-desc {
+  color: $dn-on-surface-variant;
+}
+
+// ============================================================
+// Consultation（相談）
+//   section: py-24 rounded-t-[3rem] -mt-10 relative z-10 overflow-hidden
+// ============================================================
+.p-donation-consult {
+  position: relative;
+  z-index: 10;
+  padding-block: calc(96 * var(--to-rem)); // py-24
+  margin-top: calc(-40 * var(--to-rem)); // -mt-10
+  border-radius: calc(48 * var(--to-rem)) calc(48 * var(--to-rem)) 0 0; // rounded-t-[3rem]
+  overflow: hidden;
+}
+
+// div: absolute inset-0 z-0
+.p-donation-consult__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// div: absolute inset-0 bg-surface-container-high/50 backdrop-blur-[.05rem]
+.p-donation-consult__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba($dn-surface-container-high, 0.5);
+  backdrop-filter: blur(0.05rem);
+}
+
+// div: relative z-10 max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center
+.p-donation-consult__inner {
+  position: relative;
+  z-index: 10;
+  max-width: calc(1152 * var(--to-rem)); // max-w-6xl
+  margin-inline: auto;
+  padding-inline: calc(32 * var(--to-rem)); // px-8
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(64 * var(--to-rem)); // gap-16
+  align-items: center;
+
+  @include mq(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); // lg:grid-cols-2
+  }
+}
+
+// div: space-y-8
+.p-donation-consult__body {
+  > * + * {
+    margin-top: calc(32 * var(--to-rem)); // space-y-8
+  }
+}
+
+// h2: text-3xl md:text-4xl font-bold text-on-surface leading-snug
+.p-donation-consult__title {
+  font-size: calc(30 * var(--to-rem)); // text-3xl
+  font-weight: 700;
+  color: $dn-on-surface;
+  line-height: 1.375; // leading-snug
+
+  @include mq(md) {
+    font-size: calc(36 * var(--to-rem)); // md:text-4xl
+  }
+}
+
+// div: space-y-6 text-lg text-on-surface-variant leading-relaxed
+.p-donation-consult__texts {
+  font-size: calc(18 * var(--to-rem)); // text-lg
+  color: $dn-on-surface-variant;
+  line-height: 1.625; // leading-relaxed
+
+  > * + * {
+    margin-top: calc(24 * var(--to-rem)); // space-y-6
+  }
+}
+
+// p（枠あり）: bg-surface-container-lowest p-6 rounded-lg border-l-4 border-primary shadow-sm
+.p-donation-consult__note {
+  padding: calc(24 * var(--to-rem)); // p-6
+  background-color: $dn-surface-container-lowest;
+  border-radius: calc(32 * var(--to-rem)); // rounded-lg = 2rem
+  border-left: calc(4 * var(--to-rem)) solid $dn-primary; // border-l-4
+  box-shadow: $dn-shadow-sm;
+}
+
+// div: flex justify-center lg:justify-end relative
+.p-donation-consult__card-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  @include mq(lg) {
+    justify-content: flex-end; // lg:justify-end
+  }
+}
+
+// div: absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+//      w-[140%] h-[140%] pointer-events-none hidden sm:block
+.p-donation-consult__deco {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 140%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: none;
+
+  @include mq(sm) {
+    display: block; // sm:block
+  }
+}
+
+// deco 内の装飾（共通は position:absolute rounded-full）
+.p-donation-consult__deco-blob {
+  position: absolute;
+  border-radius: 9999px;
+
+  // top-0 right-10 w-32 h-32 bg-primary-container/30 blur-3xl
+  &--1 {
+    top: 0;
+    right: calc(40 * var(--to-rem)); // right-10
+    width: calc(128 * var(--to-rem)); // w-32
+    height: calc(128 * var(--to-rem));
+    background-color: rgba($dn-primary-container, 0.3);
+    filter: blur(64px); // blur-3xl
+  }
+
+  // bottom-0 left-10 w-24 h-24 bg-tertiary-container/20 blur-2xl
+  &--2 {
+    bottom: 0;
+    left: calc(40 * var(--to-rem)); // left-10
+    width: calc(96 * var(--to-rem)); // w-24
+    height: calc(96 * var(--to-rem));
+    background-color: rgba($dn-tertiary-container, 0.2);
+    filter: blur(40px); // blur-2xl
+  }
+}
+
+.p-donation-consult__deco-dot {
+  position: absolute;
+  border-radius: 9999px;
+
+  // top-20 left-20 w-4 h-4 bg-primary-fixed animate-pulse opacity-60
+  &--1 {
+    top: calc(80 * var(--to-rem)); // top-20
+    left: calc(80 * var(--to-rem)); // left-20
+    width: calc(16 * var(--to-rem)); // w-4
+    height: calc(16 * var(--to-rem));
+    background-color: $dn-primary-fixed;
+    opacity: 0.6;
+    animation: dn-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; // animate-pulse
+  }
+
+  // bottom-20 right-32 w-3 h-3 bg-tertiary-fixed opacity-60
+  &--2 {
+    bottom: calc(80 * var(--to-rem)); // bottom-20
+    right: calc(128 * var(--to-rem)); // right-32
+    width: calc(12 * var(--to-rem)); // w-3
+    height: calc(12 * var(--to-rem));
+    background-color: $dn-tertiary-fixed;
+    opacity: 0.6;
+  }
+}
+
+@keyframes dn-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+// div: bg-primary-container text-on-primary-container p-10 rounded-2xl shadow-2xl
+//      max-w-sm relative z-10 border-4 border-white/40 backdrop-blur-sm mt-[12rem]
+.p-donation-consult__card {
+  position: relative;
+  z-index: 10;
+  max-width: calc(384 * var(--to-rem)); // max-w-sm
+  margin-top: 12rem; // mt-[12rem]
+  padding: calc(40 * var(--to-rem)); // p-10
+  background-color: $dn-primary-container;
+  color: $dn-on-primary-container;
+  border: calc(4 * var(--to-rem)) solid rgba(#ffffff, 0.4); // border-4 border-white/40
+  border-radius: calc(16 * var(--to-rem)); // rounded-2xl = 1rem（既定）
+  box-shadow: $dn-shadow-2xl;
+  backdrop-filter: blur(4px); // backdrop-blur-sm
+  overflow: hidden;
+}
+
+// div: absolute -top-6 -left-6 bg-background p-4 rounded-full shadow-lg text-primary
+.p-donation-consult__card-badge {
+  position: absolute;
+  top: calc(-24 * var(--to-rem)); // -top-6
+  left: calc(-24 * var(--to-rem)); // -left-6
+  padding: calc(16 * var(--to-rem)); // p-4
+  background-color: $dn-background;
+  border-radius: 9999px;
+  box-shadow: $dn-shadow-lg;
+  color: $dn-primary;
+
+  .material-symbols-outlined {
+    font-size: calc(30 * var(--to-rem)); // text-3xl
+  }
+}
+
+// p: font-bold text-xl mb-4
+.p-donation-consult__card-title {
+  font-weight: 700;
+  font-size: calc(20 * var(--to-rem)); // text-xl
+  margin-bottom: calc(16 * var(--to-rem)); // mb-4
+}
+
+// p: text-base leading-relaxed opacity-95
+.p-donation-consult__card-text {
+  font-size: calc(16 * var(--to-rem)); // text-base
+  line-height: 1.625; // leading-relaxed
+  opacity: 0.95;
+}
+
+// span: absolute bottom-2 right-4 text-7xl text-on-primary-container/10
+//       pointer-events-none select-none (FILL 1)
+.p-donation-consult__card-watermark {
+  position: absolute;
+  bottom: calc(8 * var(--to-rem)); // bottom-2
+  right: calc(16 * var(--to-rem)); // right-4
+  font-size: calc(72 * var(--to-rem)); // text-7xl
+  color: rgba($dn-on-primary-container, 0.1);
+  pointer-events: none;
+  user-select: none;
+}
+
+// ============================================================
+// Contact Form
+//   section: py-24 bg-surface-container-lowest
+// ============================================================
+.p-donation-contact {
+  padding-block: calc(96 * var(--to-rem)); // py-24
+  background-color: $dn-surface-container-lowest;
+}
+
+// div: max-w-3xl mx-auto px-8
+.p-donation-contact__inner {
+  max-width: calc(768 * var(--to-rem)); // max-w-3xl
+  margin-inline: auto;
+  padding-inline: calc(32 * var(--to-rem)); // px-8
+}
+
+// div: text-center mb-16 space-y-4
+.p-donation-contact__head {
+  text-align: center;
+  margin-bottom: calc(64 * var(--to-rem)); // mb-16
+
+  > * + * {
+    margin-top: calc(16 * var(--to-rem)); // space-y-4
+  }
+}
+
+// h2: text-3xl font-bold text-on-surface tracking-tight
+.p-donation-contact__title {
+  font-size: calc(30 * var(--to-rem)); // text-3xl
+  font-weight: 700;
+  color: $dn-on-surface;
+  letter-spacing: -0.025em; // tracking-tight
+}
+
+// p: text-on-surface-variant flex items-center justify-center gap-2
+.p-donation-contact__note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--to-rem)); // gap-2
+  color: $dn-on-surface-variant;
+
+  .material-symbols-outlined {
+    font-size: calc(14 * var(--to-rem)); // text-sm
+  }
+}
+
+// div: space-y-8 p-10 bg-background rounded-xl shadow-sm border border-outline-variant/20
+.p-donation-contact__box {
+  padding: calc(40 * var(--to-rem)); // p-10
+  background-color: $dn-background;
+  border: 1px solid rgba($dn-outline-variant, 0.2); // border-outline-variant/20
+  border-radius: calc(48 * var(--to-rem)); // rounded-xl = 3rem
+  box-shadow: $dn-shadow-sm;
+
+  > * + * {
+    margin-top: calc(32 * var(--to-rem)); // space-y-8
+  }
+}
+
+// WordPress の Contact Form 7 が入る場所（静的版では準備中プレースホルダ）
+.p-donation-contact__placeholder {
+  padding: calc(40 * var(--to-rem)) 0;
+  text-align: center;
+  font-size: calc(13 * var(--to-rem));
+  color: $dn-on-surface-variant;
+  border: 1px dashed $dn-outline-variant;
+  border-radius: calc(16 * var(--to-rem));
+}

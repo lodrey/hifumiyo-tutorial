@@ -1,0 +1,119 @@
+@use "../global" as *;
+
+.p-page-hero {
+  position: relative;
+  padding-block: calc(60 * var(--to-rem));
+  background-color: var(--color-bg-sub);
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -8%;
+    width: calc(300 * var(--to-rem));
+    height: calc(300 * var(--to-rem));
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-orange-light) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+
+    @include mq(md) {
+      width: calc(450 * var(--to-rem));
+      height: calc(450 * var(--to-rem));
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: calc(180 * var(--to-rem));
+    height: calc(180 * var(--to-rem));
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-green-light) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @include mq(md) {
+    padding-block: calc(80 * var(--to-rem));
+  }
+}
+
+.p-page-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.p-page-hero__en {
+  display: block;
+  font-family: var(--title-font-family);
+  font-size: clamp(calc(38 * var(--to-rem)), 8vw, calc(80 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  opacity: 0.08;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.p-page-hero__title {
+  margin-top: calc(8 * var(--to-rem));
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(calc(22 * var(--to-rem)), 4.5vw, calc(36 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1.4;
+
+  @include mq(md) {
+    margin-top: calc(12 * var(--to-rem));
+  }
+}
+
+.p-page-hero__breadcrumb {
+  margin-top: calc(10 * var(--to-rem));
+
+  @include mq(md) {
+    margin-top: calc(14 * var(--to-rem));
+  }
+}
+
+.p-page-hero__breadcrumb-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.p-page-hero__breadcrumb-item {
+  display: flex;
+  align-items: center;
+  font-size: calc(16 * var(--to-rem));
+  color: var(--color-text-sub);
+
+  & + &::before {
+    content: "\f105";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-inline: calc(12 * var(--to-rem));
+    color: var(--color-border);
+    font-size: calc(12 * var(--to-rem));
+  }
+
+  a {
+    color: var(--color-link);
+    transition: opacity var(--duration);
+
+    @media (any-hover: hover) {
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+@use "../global" as *;
+
+.p-news {
+  position: relative;
+  z-index: 1;
+}
+
+.p-news__content {
+}
+
+.p-news__flex {
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--to-rem));
+  margin-top: calc(30 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(60 * var(--to-rem));
+    margin-top: calc(40 * var(--to-rem));
+  }
+}
+
+.p-news__list {
+  flex: 1;
+
+  @include mq(md) {
+    flex: 0 0 60%; // リスト 6割
+  }
+}
+
+.p-news__img {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+
+  @include mq(md) {
+    flex: 0 0 calc(40% - calc(60 * var(--to-rem))); // 画像 4割（gap分を差し引き）
+  }
+
+  // マスキングテープ風装飾 (左上)
+  &::before {
+    content: "";
+    position: absolute;
+    top: calc(-15 * var(--to-rem)); // 配置を微調整
+    left: calc(-15 * var(--to-rem)); // 配置を微調整
+    width: calc(110 * var(--to-rem)); // サイズを大きく
+    height: calc(32 * var(--to-rem)); // 太さを出す
+    background-color: oklch(from var(--color-yellow) l c h / 80%); // 補助カラーのイエローを活用
+    transform: rotate(-15deg); // 右下の角に合わせて逆方向に傾ける
+    z-index: 2; // 画像の上に表示
+    border-radius: 2px; // 少しだけ角丸に
+  }
+
+  // マスキングテープ風装飾 (右下)
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: calc(-15 * var(--to-rem)); // 配置を微調整
+    right: calc(-15 * var(--to-rem)); // 配置を微調整
+    width: calc(110 * var(--to-rem)); // サイズを大きく
+    height: calc(32 * var(--to-rem)); // 太さを出す
+    background-color: oklch(from var(--color-yellow) l c h / 80%);
+    transform: rotate(-15deg); // 傾きを強く
+    z-index: 2; // 画像の上に表示
+    border-radius: 2px; // 少しだけ角丸に
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 60px 15px 60px 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.p-news__item {
+  border-bottom: 1px solid #e0e0e0;
+  &:first-child {
+    border-top: 1px solid #e0e0e0;
+  }
+}
+
+.p-news__link {
+  display: flex;
+  flex-direction: column;
+  padding-block: calc(20 * var(--to-rem));
+  gap: calc(10 * var(--to-rem));
+  transition: opacity 0.3s;
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: center;
+    gap: calc(40 * var(--to-rem));
+    padding-block: calc(25 * var(--to-rem));
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+.p-news__meta {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--to-rem));
+  flex-shrink: 0;
+}
+
+.p-news__date {
+  font-size: calc(14 * var(--to-rem));
+  color: #888;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.p-news__category {
+  font-size: calc(11 * var(--to-rem));
+  padding: calc(2 * var(--to-rem)) calc(12 * var(--to-rem));
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  border-radius: calc(2 * var(--to-rem));
+  font-weight: var(--fw-bold);
+}
+
+.p-news__item-title {
+  font-size: calc(15 * var(--to-rem));
+  line-height: 1.6;
+  font-weight: var(--fw-medium);
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.p-news__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.p-news__sub-title {
+  font-size: calc(20 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.5;
+
+  @include mq(md) {
+    font-size: calc(24 * var(--to-rem));
+  }
+}
+
+.p-news__btn {
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary); // オレンジに変更して活発な印象に
+  border-bottom: 1px solid var(--color-primary);
+  padding-bottom: calc(5 * var(--to-rem));
+  transition: all 0.3s ease;
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: var(--color-accent); // ホバー時はレッドに変化
+      border-color: var(--color-accent);
+      padding-right: calc(10 * var(--to-rem));
+    }
+  }
+
+  &::after {
+    content: "→";
+    margin-left: 0.5em;
+  }
+}

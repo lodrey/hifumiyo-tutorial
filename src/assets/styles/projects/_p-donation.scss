@@ -1,0 +1,211 @@
+@use "../global" as *;
+
+.p-donation {
+  position: relative;
+  padding-block: calc(60 * var(--to-rem));
+  background: linear-gradient(180deg, var(--color-bg-main) 0%, var(--color-orange-light) 100%); // オレンジベースの背景
+  overflow: hidden; // 装飾の飛び出し防止
+
+  // ホバー時に出現する情緒的なメッセージ
+  &::after {
+    content: "繋げる未来";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    font-family: 'Shippori Mincho', serif;
+    font-size: calc(32 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-primary);
+    writing-mode: horizontal-tb;
+    opacity: 0;
+    letter-spacing: -0.2em;
+    transform: translate(-50%, -50%) scale(0.9);
+    transition: opacity 1.5s ease, transform 1.5s ease, letter-spacing 1.5s ease;
+    pointer-events: none;
+    z-index: 0;
+
+    @include mq(md) {
+      font-size: calc(72 * var(--to-rem));
+    }
+  }
+
+  @include mq(md) {
+    padding-block: calc(100 * var(--to-rem));
+  }
+
+  @media (any-hover: hover) {
+    &:hover::after {
+      opacity: 0.15; // 文字色を少し濃く（視認性を向上）
+      transform: translate(-50%, -50%) scale(1.1);
+      letter-spacing: 0.4em; // 文字間隔を広げてセクション幅へ展開
+    }
+  }
+}
+
+// 左上の花びら装飾
+.p-donation__deco-petals {
+  position: absolute;
+  top: calc(20 * var(--to-rem));
+  left: calc(-30 * var(--to-rem));
+  width: calc(240 * var(--to-rem));
+  height: calc(240 * var(--to-rem));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%234fa35a' opacity='0.12'/%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%234fa35a' opacity='0.10' transform='rotate(60 100 100)'/%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%234fa35a' opacity='0.10' transform='rotate(120 100 100)'/%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%23a8c94a' opacity='0.08' transform='rotate(180 100 100)'/%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%23a8c94a' opacity='0.08' transform='rotate(240 100 100)'/%3E%3Cellipse cx='100' cy='55' rx='28' ry='50' fill='%234fa35a' opacity='0.10' transform='rotate(300 100 100)'/%3E%3Ccircle cx='100' cy='100' r='18' fill='%23f28c28' opacity='0.15'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 0;
+  animation: spin-slow 20s linear infinite;
+
+  @include mq(md) {
+    width: calc(340 * var(--to-rem));
+    height: calc(340 * var(--to-rem));
+    top: calc(40 * var(--to-rem));
+    left: calc(-60 * var(--to-rem));
+  }
+}
+
+// 右下の小さな円群
+.p-donation__deco-circles {
+  position: absolute;
+  bottom: calc(20 * var(--to-rem));
+  right: calc(10 * var(--to-rem));
+  width: calc(160 * var(--to-rem));
+  height: calc(160 * var(--to-rem));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Ccircle cx='130' cy='30' r='28' fill='none' stroke='%234fa35a' stroke-width='2' opacity='0.18'/%3E%3Ccircle cx='100' cy='80' r='18' fill='none' stroke='%23a8c94a' stroke-width='2' opacity='0.15'/%3E%3Ccircle cx='140' cy='110' r='12' fill='%234fa35a' opacity='0.12'/%3E%3Ccircle cx='80' cy='130' r='8' fill='%23a8c94a' opacity='0.15'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 0;
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.p-donation__card {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: var(--color-white);
+  border-radius: calc(16 * var(--to-rem));
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1); // Deeper, wider shadow
+  transition: transform 0.3s ease, box-shadow 0.3s ease; // Add transition for hover effect
+
+  @media (any-hover: hover) {
+    &:hover {
+      transform: translateY(-5px); // Lift card slightly on hover
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); // Even more pronounced shadow on hover
+    }
+  }
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.p-donation__info {
+  padding: calc(30 * var(--to-rem)) calc(20 * var(--to-rem));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(20 * var(--to-rem));
+
+  @include mq(md) {
+    flex: 1.2;
+    padding: calc(60 * var(--to-rem));
+  }
+}
+
+.p-donation__sub-title {
+  font-size: calc(20 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary); // 情熱的なサンライズオレンジ
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.5;
+  position: relative;
+  padding-left: calc(15 * var(--to-rem));
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    bottom: 0.2em;
+    width: 3px;
+    background-color: var(--color-accent); // アクセントカラーの縦線で力強さを
+    border-radius: 2px;
+  }
+
+  @include mq(md) {
+    font-size: calc(28 * var(--to-rem));
+    padding-left: calc(20 * var(--to-rem));
+  }
+}
+
+.p-donation__text {
+  font-size: calc(14 * var(--to-rem));
+  line-height: 1.8;
+  color: var(--color-text);
+  opacity: 0.9;
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+.p-donation__action {
+  margin-top: calc(10 * var(--to-rem));
+}
+
+.p-donation__btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--color-red) 0%, var(--color-orange) 100%); // レッドからオレンジへの情熱的なグラデーション
+  color: var(--color-white);
+  padding: calc(15 * var(--to-rem)) calc(40 * var(--to-rem));
+  border-radius: calc(30 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  font-size: calc(14 * var(--to-rem));
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px oklch(from var(--color-red) l c h / 30%); // レッド系の影で力強さを
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      transform: translateY(-3px) scale(1.03); // わずかに拡大して躍動感を出す
+      box-shadow: 0 10px 30px oklch(from var(--color-red) l c h / 40%);
+      opacity: 0.9;
+    }
+  }
+}
+
+.p-donation__image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+
+  @include mq(md) {
+    flex: 1;
+    aspect-ratio: auto;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  // Add image zoom on card hover
+  .p-donation__card:hover & img {
+    transform: scale(1.05); // Slightly zoom image on card hover
+  }
+}

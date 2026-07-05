@@ -1,0 +1,445 @@
+@use "../global" as *;
+
+// ============================================================
+// 花咲か舎ページ — シンプルグリッドレイアウト
+// ============================================================
+
+// --------------------------------------------------
+// セクション共通
+// --------------------------------------------------
+.hana-section {
+  padding-block: calc(72 * var(--to-rem));
+
+  @include mq(md) {
+    padding-block: calc(96 * var(--to-rem));
+  }
+}
+
+.hana-section--alt {
+  background-color: var(--color-bg-sub);
+}
+
+// セクションヘッド
+.hana-section-head {
+  margin-bottom: calc(48 * var(--to-rem));
+}
+
+.hana-label {
+  display: inline-block;
+  font-family: var(--title-font-family);
+  font-size: calc(11 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.18em;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  padding: calc(3 * var(--to-rem)) calc(12 * var(--to-rem));
+  border-radius: calc(2 * var(--to-rem));
+  margin-bottom: calc(12 * var(--to-rem));
+}
+
+.hana-section-title {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(calc(20 * var(--to-rem)), 3vw, calc(28 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1.45;
+  padding-bottom: calc(16 * var(--to-rem));
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: calc(16 * var(--to-rem));
+}
+
+.hana-section-lead {
+  font-size: calc(15 * var(--to-rem));
+  line-height: 1.9;
+  color: var(--color-text-sub);
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+// --------------------------------------------------
+// グリッド共通
+// --------------------------------------------------
+.hana-grid {
+  display: grid;
+  gap: calc(16 * var(--to-rem));
+
+  @include mq(md) {
+    gap: calc(24 * var(--to-rem));
+  }
+}
+
+.hana-grid--2col {
+  grid-template-columns: 1fr;
+
+  @include mq(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.hana-grid--3col {
+  grid-template-columns: 1fr;
+
+  @include mq(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mq(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.hana-grid--5col {
+  grid-template-columns: repeat(2, 1fr);
+
+  @include mq(sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include mq(lg) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+// --------------------------------------------------
+// カード共通
+// --------------------------------------------------
+.hana-card {
+  background-color: var(--color-pure-white);
+  border: 1px solid var(--color-border);
+  border-radius: calc(8 * var(--to-rem));
+  padding: calc(24 * var(--to-rem));
+
+  // 横並びROW
+  &--row {
+    display: flex;
+    align-items: center;
+    gap: calc(16 * var(--to-rem));
+    padding: calc(20 * var(--to-rem)) calc(24 * var(--to-rem));
+  }
+
+  // 中央揃え
+  &--center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: calc(10 * var(--to-rem));
+  }
+
+  // 上部ボーダーカラーバリアント
+  &--border-green  { border-top: 3px solid var(--color-green); }
+  &--border-lime   { border-top: 3px solid var(--color-lime); }
+  &--border-blue   { border-top: 3px solid #3b82f6; }
+  &--border-orange { border-top: 3px solid var(--color-orange); }
+  &--border-purple { border-top: 3px solid #8b5cf6; }
+}
+
+.hana-card-head {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--to-rem));
+  margin-bottom: calc(12 * var(--to-rem));
+}
+
+.hana-card-num {
+  flex-shrink: 0;
+  width: calc(32 * var(--to-rem));
+  height: calc(32 * var(--to-rem));
+  border-radius: 50%;
+  background-color: var(--color-orange-light);
+  color: var(--color-orange);
+  font-family: var(--title-font-family);
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hana-card-title {
+  font-size: calc(15 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1.5;
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+.hana-card-text {
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.hana-card-desc {
+  font-size: calc(13 * var(--to-rem));
+  line-height: 1.85;
+  color: var(--color-text-sub);
+
+  @include mq(md) {
+    font-size: calc(14 * var(--to-rem));
+  }
+}
+
+// 五領域のタグリスト
+.hana-card-tags {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--to-rem));
+  margin-top: calc(4 * var(--to-rem));
+
+  li {
+    font-size: calc(11 * var(--to-rem));
+    color: var(--color-text-sub);
+    line-height: 1.5;
+
+    @include mq(md) {
+      font-size: calc(12 * var(--to-rem));
+    }
+  }
+}
+
+// --------------------------------------------------
+// アイコン
+// --------------------------------------------------
+.hana-icon {
+  flex-shrink: 0;
+  width: calc(44 * var(--to-rem));
+  height: calc(44 * var(--to-rem));
+  border-radius: calc(8 * var(--to-rem));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(18 * var(--to-rem));
+
+  &--orange { background-color: var(--color-orange-light); color: var(--color-orange); }
+  &--green  { background-color: var(--color-green-light);  color: var(--color-green); }
+  &--lime   { background-color: var(--color-lime-light);   color: var(--color-lime); }
+  &--blue   { background-color: #eff6ff; color: #3b82f6; }
+  &--purple { background-color: #f5f3ff; color: #8b5cf6; }
+}
+
+// --------------------------------------------------
+// 施設概要
+// --------------------------------------------------
+.hana-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(32 * var(--to-rem));
+
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.hana-overview-image {
+  border-radius: calc(8 * var(--to-rem));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.hana-overview-info {
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--to-rem));
+}
+
+.hana-overview-lead {
+  font-size: calc(14 * var(--to-rem));
+  line-height: 1.9;
+  color: var(--color-text);
+
+  @include mq(md) {
+    font-size: calc(15 * var(--to-rem));
+  }
+}
+
+// 基本情報リスト
+.hana-info-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: calc(8 * var(--to-rem));
+  overflow: hidden;
+}
+
+.hana-info-row {
+  display: grid;
+  grid-template-columns: calc(100 * var(--to-rem)) 1fr;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-child { border-bottom: none; }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: calc(6 * var(--to-rem));
+    font-size: calc(13 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-text);
+    background-color: var(--color-bg-sub);
+    padding: calc(12 * var(--to-rem)) calc(14 * var(--to-rem));
+    white-space: nowrap;
+
+    i { color: var(--color-primary); width: calc(14 * var(--to-rem)); text-align: center; }
+  }
+
+  dd {
+    font-size: calc(13 * var(--to-rem));
+    line-height: 1.7;
+    color: var(--color-text);
+    background-color: var(--color-pure-white);
+    padding: calc(12 * var(--to-rem)) calc(14 * var(--to-rem));
+
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+// --------------------------------------------------
+// 活動例タグクラウド
+// --------------------------------------------------
+.hana-activity-wrap {
+  margin-top: calc(40 * var(--to-rem));
+  padding: calc(20 * var(--to-rem)) calc(24 * var(--to-rem));
+  border: 1px solid var(--color-border);
+  border-radius: calc(8 * var(--to-rem));
+  background-color: var(--color-bg-sub);
+}
+
+.hana-activity-label {
+  font-size: calc(13 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text-sub);
+  margin-bottom: calc(12 * var(--to-rem));
+  letter-spacing: 0.05em;
+}
+
+.hana-activity-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * var(--to-rem));
+
+  li {
+    font-size: calc(13 * var(--to-rem));
+    padding: calc(5 * var(--to-rem)) calc(14 * var(--to-rem));
+    background-color: var(--color-pure-white);
+    border: 1px solid var(--color-border);
+    border-radius: calc(4 * var(--to-rem));
+    color: var(--color-text);
+  }
+}
+
+// --------------------------------------------------
+// 一日の流れ
+// --------------------------------------------------
+.hana-day-block {
+  border: 1px solid var(--color-border);
+  border-radius: calc(8 * var(--to-rem));
+  overflow: hidden;
+}
+
+.hana-day-label {
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-pure-white);
+  background-color: var(--color-primary);
+  padding: calc(14 * var(--to-rem)) calc(20 * var(--to-rem));
+  line-height: 1.5;
+
+  span {
+    display: block;
+    font-size: calc(12 * var(--to-rem));
+    font-weight: var(--fw-regular);
+    opacity: 0.85;
+    margin-top: calc(2 * var(--to-rem));
+  }
+}
+
+.hana-day-list {
+  list-style: none;
+  background-color: var(--color-pure-white);
+  counter-reset: day-counter;
+
+  li {
+    counter-increment: day-counter;
+    display: grid;
+    grid-template-columns: calc(32 * var(--to-rem)) 1fr;
+    align-items: center;
+    gap: calc(12 * var(--to-rem));
+    padding: calc(11 * var(--to-rem)) calc(20 * var(--to-rem));
+    font-size: calc(14 * var(--to-rem));
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child { border-bottom: none; }
+
+    &::before {
+      content: counter(day-counter);
+      width: calc(24 * var(--to-rem));
+      height: calc(24 * var(--to-rem));
+      border-radius: 50%;
+      background-color: var(--color-green-light);
+      color: var(--color-green);
+      font-size: calc(11 * var(--to-rem));
+      font-weight: var(--fw-bold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+// --------------------------------------------------
+// 保護者の声
+// --------------------------------------------------
+.hana-voice {
+  margin: 0;
+  padding: calc(24 * var(--to-rem));
+  background-color: var(--color-pure-white);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: calc(8 * var(--to-rem));
+
+  p {
+    font-size: calc(14 * var(--to-rem));
+    line-height: 1.9;
+    color: var(--color-text);
+
+    &::before {
+      content: "「";
+      color: var(--color-primary);
+      font-weight: var(--fw-bold);
+    }
+
+    &::after {
+      content: "」";
+      color: var(--color-primary);
+      font-weight: var(--fw-bold);
+    }
+
+    @include mq(md) {
+      font-size: calc(15 * var(--to-rem));
+    }
+  }
+}
+

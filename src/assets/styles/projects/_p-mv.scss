@@ -1,0 +1,200 @@
+@use "../global" as *;
+
+.p-mv {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden; // スライダーの拡大アニメーションによるはみ出しを防止
+  height: 80vh;
+
+  @include mq(md) {
+    height: 80vh;
+  }
+
+  // ファーストビュー下端を波形にして、次セクション（bg-sub）が写真へ流れ込む演出
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    z-index: 3;
+    width: 100%;
+    height: calc(34 * var(--to-rem)); // 高さを縮めて波の切れ目を下げる（波形は overflow:hidden で下端固定のため相似で下がる）
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C240,84 480,-4 720,40 C960,84 1200,-4 1440,40 L1440,80 L0,80 Z' fill='%23f4f8f5'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+
+    @include mq(md) {
+      height: calc(48 * var(--to-rem));
+    }
+  }
+}
+
+.p-mv__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+}
+
+.p-mv__title-wrap {
+  position: absolute;
+  top: clamp(calc(60 * var(--to-rem)), 12vh, calc(100 * var(--to-rem))); // 画面高さに合わせて上部余白をレスポンシブに
+  left: 50%; // モバイルでは画面中央に配置
+  transform: translateX(-50%);
+  z-index: 2;
+  width: clamp(calc(140 * var(--to-rem)), 35vw, calc(180 * var(--to-rem))); // モバイル時のサイズを流動的に
+  max-width: 80%; // 画面幅が狭い場合でも範囲内に収める
+  opacity: 0; // 初期状態を透明に
+  animation: fv-title-fade 1.6s ease-out 0.6s forwards; // 0.6秒後にフェードイン開始
+
+  @include mq("md") {
+    top: calc(80 * var(--to-rem));
+    left: calc(50% + calc(200 * var(--to-rem))); // PCでは中央から200px右に調整
+    width: calc(230 * var(--to-rem)); // PCではサイズを適切に大きく
+    max-width: 40%;
+  }
+}
+
+.p-mv__main-title {
+  line-height: 0;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.p-mv__slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-gray);
+}
+
+.p-mv__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: mv-fade 30s infinite;
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: calc(30s / 6 * (#{$i} - 1));
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.p-mv__news {
+  position: absolute;
+  right: calc(10 * var(--to-rem));
+  bottom: calc(33 * var(--to-rem)); // 波より上へ持ち上げて全体を見せる
+  z-index: 4; // 波の ::after（z-index:3）より前面に出し、全体が隠れないようにする
+  width: min(calc(100% - calc(20 * var(--to-rem))), calc(340 * var(--to-rem)));
+  max-width: calc(340 * var(--to-rem));
+  width: min(calc(100% - calc(20 * var(--to-rem))), calc(180 * var(--to-rem)));
+  max-width: calc(180 * var(--to-rem));
+  background-color: var(--color-bg-sub);
+  padding: calc(12 * var(--to-rem)) calc(14 * var(--to-rem));
+  border-radius: calc(8 * var(--to-rem));
+  box-shadow: 0 calc(4 * var(--to-rem)) calc(12 * var(--to-rem)) oklch(from var(--color-black) l c h / 8%);
+
+  @include mq("md") {
+    width: calc(100% - calc(20 * var(--to-rem)));
+    max-width: calc(330 * var(--to-rem));
+    padding: calc(15 * var(--to-rem)) calc(12 * var(--to-rem));
+  }
+}
+
+.p-mv__news-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(6 * var(--to-rem));
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--duration);
+
+  @include mq("md") {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(16 * var(--to-rem));
+  }
+
+  @media (any-hover: hover) {
+    .p-mv__news:hover & {
+      color: var(--color-link);
+    }
+  }
+}
+
+.p-mv__news-label {
+  flex-shrink: 0;
+  font-size: calc(13 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.p-mv__news-body {
+  width: 100%;
+  min-width: 0;
+}
+
+.p-mv__news-date {
+  display: block;
+  font-size: calc(12 * var(--to-rem));
+  color: var(--color-text);
+  opacity: 0.72;
+  margin-bottom: calc(6 * var(--to-rem));
+  line-height: 1.4;
+}
+
+.p-mv__news-title {
+  font-size: calc(13 * var(--to-rem));
+  line-height: 1.5;
+  color: var(--color-text);
+  font-weight: var(--fw-medium);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-wrap: pretty;
+}
+
+@keyframes mv-fade {
+  0% { opacity: 0; transform: scale(1); }
+  5% { opacity: 1; }
+  16.6% { opacity: 1; }
+  21.6% { opacity: 0; transform: scale(1.1); }
+  100% { opacity: 0; }
+}
+
+// キャッチコピー用のフェードインアニメーション
+@keyframes fv-title-fade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(15px); // 少し下から
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// 浮遊ドットのアニメーション
+@keyframes float-dots {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}

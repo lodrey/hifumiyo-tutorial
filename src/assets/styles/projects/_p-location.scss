@@ -1,0 +1,183 @@
+@use "../global" as *;
+
+.p-location {
+  padding-block: calc(60 * var(--to-rem));
+  background-color: var(--color-green-light);
+  position: relative;
+  overflow: hidden;
+
+  @include mq(md) {
+    padding-block: calc(100 * var(--to-rem));
+  }
+
+// 右上のグリーン円形装飾
+&::after {
+  content: "";
+  position: absolute;
+  top: calc(-40 * var(--to-rem));
+  right: calc(-40 * var(--to-rem));
+  width: calc(240 * var(--to-rem));
+  height: calc(240 * var(--to-rem));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='none' stroke='%234fa35a' stroke-width='2.5' stroke-dasharray='10 8' opacity='0.15'/%3E%3Ccircle cx='100' cy='100' r='55' fill='none' stroke='%23a8c94a' stroke-width='2' stroke-dasharray='6 10' opacity='0.12'/%3E%3Ccircle cx='100' cy='100' r='30' fill='%234fa35a' opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 0;
+  animation: spin-slow 20s linear infinite;
+
+  @include mq(md) {
+    width: calc(360 * var(--to-rem));
+    height: calc(360 * var(--to-rem));
+    top: calc(-60 * var(--to-rem));
+    right: calc(-60 * var(--to-rem));
+  }
+}
+
+// 左下の葉＋ドット装飾
+.p-location__deco-leaf {
+  position: absolute;
+  bottom: calc(10 * var(--to-rem));
+  left: calc(-20 * var(--to-rem));
+  width: calc(200 * var(--to-rem));
+  height: calc(180 * var(--to-rem));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 180'%3E%3Cellipse cx='70' cy='130' rx='65' ry='40' fill='%234fa35a' opacity='0.14' transform='rotate(-25 70 130)'/%3E%3Cellipse cx='120' cy='100' rx='50' ry='30' fill='%23a8c94a' opacity='0.10' transform='rotate(10 120 100)'/%3E%3Ccircle cx='160' cy='40' r='16' fill='%234fa35a' opacity='0.10'/%3E%3Ccircle cx='30' cy='50' r='8' fill='%23a8c94a' opacity='0.12'/%3E%3Ccircle cx='170' cy='140' r='6' fill='%234fa35a' opacity='0.10'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  animation: spin-slow 20s linear infinite;
+
+  @include mq(md) {
+    width: calc(280 * var(--to-rem));
+    height: calc(260 * var(--to-rem));
+  }
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.p-location__content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(60 * var(--to-rem));
+  }
+}
+
+.p-location__map {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #eee;
+  border-radius: calc(32 * var(--to-rem)); // 角丸をより大きくして柔らかい印象に
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); // 影を深めてモダンな浮遊感を演出
+  border: 6px solid var(--color-white); // 白枠をつけて「カード」としての質感を強調
+
+  @include mq(md) {
+    flex: 5.5;
+    aspect-ratio: auto;
+    min-height: calc(480 * var(--to-rem)); // 拡大
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    // 彩度を少し上げ、サイトのトーンに馴染むようクリーンな発色に調整
+    filter: saturate(1.1) brightness(0.98);
+    transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+
+    @media (any-hover: hover) {
+      &:hover {
+        filter: saturate(1.3) brightness(1); // ホバー時にマップを鮮やかに
+      }
+    }
+  }
+}
+
+.p-location__info-group {
+  display: flex;
+  /* SP: 法人概念が上に来るよう逆順 */
+  flex-direction: column-reverse;
+  gap: calc(24 * var(--to-rem));
+
+  @include mq(md) {
+    /* PC: 元の高さを打消し、横並びに */
+    flex: 4.5;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.p-location__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include mq(md) {
+    padding-bottom: calc(40 * var(--to-rem));
+  }
+}
+
+.p-location__details {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--to-rem));
+}
+
+.p-location__details-item {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(16 * var(--to-rem));
+  padding-bottom: calc(16 * var(--to-rem));
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1); // 繊細な区切り線を追加
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  dt {
+    flex: 0 0 calc(100 * var(--to-rem)); // アイコン追加に伴い幅を少し広げます
+    font-size: calc(12 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    gap: calc(8 * var(--to-rem));
+
+    i {
+      width: calc(18 * var(--to-rem));
+      text-align: center;
+      font-size: calc(14 * var(--to-rem));
+    }
+  }
+  dd {
+    flex: 1;
+    font-size: calc(15 * var(--to-rem));
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+}
+
+.p-location__sub-title {
+  /* SP: 横書き */
+  font-family: 'Shippori Mincho', serif;
+  font-size: calc(20 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  line-height: 1.5;
+  color: var(--color-text);
+
+  @include mq(md) {
+    /* PC: 縦書き */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: calc(24 * var(--to-rem));
+  }
+}
+}

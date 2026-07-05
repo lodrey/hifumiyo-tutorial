@@ -1,0 +1,101 @@
+@use "sass:math";
+
+@property --root-font-size {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 16px;
+}
+
+// ローカルフォントのNoto sans JPを優先して使用するためのフォントファイルを読み込む
+@font-face {
+  font-family: "Local Noto Sans JP";
+  src: local("Noto Sans JP");
+}
+
+:root {
+  /* inner */
+  --inner: min(1080px, 100%);
+  --inner-sp: min(500px, 100%);
+  --padding-inner: 20px;
+
+  /* z-index */
+  --z-index-header: 900;
+
+  // 1. 純粋な白（反転文字用など）
+  --color-pure-white: #ffffff;
+
+  // 2. 背景・ベースカラー（オフホワイトベース）
+  --color-bg-main: #fdfbf7;    // メイン背景：あたたかいオフホワイト
+  --color-bg-sub: #f4f8f5;     // サブ背景：ほんのり緑がかったナチュラルホワイト（安心・自然の残り香）
+
+  // 3. テキスト・線
+  --color-text: #3a3a3a;       // 本文：チャコールグレー（やわらかい黒）
+  --color-text-sub: rgba(58, 58, 58, 0.7); // 本文色の透過版
+  --color-black: #3a3a3a;
+  --color-gray: #f0f0f0;
+  --color-border: #d4ddd6;     // 区切り線：グリーンがかったグレージュ
+
+  // 4. ブランド5色（コンセプト「感情を受け止め、成長を見守る場所」）
+  // 単なる明るい福祉サイトではなく「安心の居場所」を軸に色の重みを配置する。
+  --color-red: #e8383a;        // 情熱・感情（喜怒哀楽を受け止める。アクセントとしてスパリングに）
+  --color-orange: #f28c28;     // 暖かさ・温もり（スタッフの関わり・地域のつながり）
+  --color-yellow: #f0c220;     // 希望・明るさ（子どもの可能性・未来への期待）
+  --color-lime: #a8c94a;       // 成長・新芽（外遊び・躍動・学びの喜び）
+  --color-green: #4fa35a;      // 安心・自然（見守り・信頼・居場所の核となる色）
+  --color-link: #4fa35a;       // リンク：リーフグリーン
+
+  // 5. 座布団（薄い塗りのボックス）用カラー
+  --color-red-light: rgba(232, 56, 58, 0.08);     // 感情の柔らかい受け止め
+  --color-orange-light: rgba(242, 140, 40, 0.1);  // 温かな包容感
+  --color-yellow-light: rgba(240, 194, 32, 0.1);  // 光・希望の残光
+  --color-lime-light: rgba(168, 201, 74, 0.1);    // 若芽・外遊びの息吹
+  --color-green-light: rgba(79, 163, 90, 0.1);    // 安心・自然の静けさ
+
+  // 6. セクション背景用（コンセプトに応じた色の割り当て）
+  --color-bg-concept: var(--color-bg-sub);          // コンセプト：ナチュラルなサブ背景
+  --color-bg-activities: var(--color-lime-light);   // 活動風景：外遊び・躍動（ライムの息吹）
+  --color-bg-business: var(--color-green-light);    // 事業紹介：安心・見守り（グリーンの信頼）
+  --color-bg-donation: var(--color-orange-light);   // 寄付案内：温かさ・共感（オレンジの温もり）
+  --color-bg-access: var(--color-bg-sub);           // アクセス：ナチュラルなサブ背景
+
+  // 役割への割り当て
+  // primary = 安心・自然（グリーン）を軸に。信頼・居場所の核として最も多く目に触れる色
+  // secondary = 温かさ（オレンジ）が補助。人との関わりや温もりの演出に
+  // accent = 感情（レッド）はスパリングに。泣いて・笑って・悩んでの瞬間を鋭く彩る
+  --color-primary: var(--color-green);     // 安心・信頼・自然：CTA・小見出し・ボーダー
+  --color-secondary: var(--color-orange);  // 温かさ・関わり：補助ボタン・ハイライト
+  --color-accent: var(--color-red);        // 感情・個性：感情に触れる場面の強調
+  --color-sub: var(--color-footer-bg);     // フッター・深いトーンの要素（後方互換）
+
+  /* font-weight */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* font-family */
+  --base-font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+  --title-font-family: "M PLUS Rounded 1c", sans-serif;
+  --copy-font-family: "Kurenaido", "Zen Maru Gothic", serif;
+
+  // 16pxを基準として、1pxあたりのremを計算
+  --to-rem: calc(tan(atan2(1px, var(--root-font-size))) * 1rem);
+
+  // how to use
+  // font-size: calc(16 * var(--to-rem));
+
+  /* font-size */
+  --fz-base: calc(16 * var(--to-rem));
+  --fz-nav: clamp(calc(16 * var(--to-rem)), 1.5vw, calc(20 * var(--to-rem)));
+  --fz-title-l: clamp(calc(32 * var(--to-rem)), 5vw, calc(48 * var(--to-rem)));
+
+  /* transition duration */
+  --duration: 0.3s;
+
+  /* header height */
+  --header-height: 80px;
+
+  @media screen and (width >= 768px) {
+    --header-height: 100px;
+  }
+}

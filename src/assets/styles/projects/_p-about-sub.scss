@@ -1,0 +1,219 @@
+@use "../global" as *;
+
+// ビジョン・理念セクション（aboutサブページ用）
+.p-about-vision {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: center;
+    gap: calc(60 * var(--to-rem));
+  }
+}
+
+.p-about-vision__text {
+  flex: 1;
+}
+
+.p-about-vision__catch {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(calc(18 * var(--to-rem)), 3vw, calc(24 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  line-height: 1.7;
+  margin-bottom: calc(24 * var(--to-rem));
+  padding-left: calc(16 * var(--to-rem));
+  border-left: 4px solid var(--color-primary);
+}
+
+.p-about-vision__body {
+  font-size: calc(15 * var(--to-rem));
+  line-height: 2;
+  color: var(--color-text);
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+.p-about-vision__image {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: calc(420 * var(--to-rem));
+  border-radius: calc(16 * var(--to-rem));
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+
+  @include mq(md) {
+    width: 45%;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+// 指針カード
+.p-beginning-cards {
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--to-rem));
+
+  @include mq(md) {
+    gap: calc(24 * var(--to-rem));
+  }
+}
+
+.p-beginning-card {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--to-rem));
+  padding: calc(24 * var(--to-rem));
+  background-color: var(--color-pure-white);
+  border-radius: calc(12 * var(--to-rem));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-top: 3px solid var(--color-primary);
+  transition: transform var(--duration), box-shadow var(--duration);
+
+  @include mq(sm) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(24 * var(--to-rem));
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &:nth-child(2) {
+    border-top-color: var(--color-accent);
+  }
+
+  &:nth-child(3) {
+    border-top-color: var(--color-lime);
+  }
+
+  &:nth-child(4) {
+    border-top-color: var(--color-green);
+  }
+}
+
+.p-beginning-card__number {
+  flex-shrink: 0;
+  font-family: var(--title-font-family);
+  font-size: clamp(calc(36 * var(--to-rem)), 5vw, calc(48 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+  opacity: 0.15;
+  line-height: 1;
+
+  .p-beginning-card:nth-child(2) & {
+    color: var(--color-accent);
+  }
+
+  .p-beginning-card:nth-child(3) & {
+    color: var(--color-lime);
+  }
+
+  .p-beginning-card:nth-child(4) & {
+    color: var(--color-green);
+  }
+}
+
+.p-beginning-card__title {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(calc(15 * var(--to-rem)), 2.5vw, calc(18 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: calc(10 * var(--to-rem));
+  line-height: 1.5;
+}
+
+.p-beginning-card__text {
+  font-size: calc(14 * var(--to-rem));
+  line-height: 1.9;
+  color: var(--color-text);
+  opacity: 0.9;
+
+  @include mq(md) {
+    font-size: calc(15 * var(--to-rem));
+  }
+}
+
+// 代表メッセージ
+.p-message {
+  display: flex;
+  flex-direction: column;
+  gap: calc(32 * var(--to-rem));
+  padding: calc(32 * var(--to-rem));
+  background-color: var(--color-bg-sub);
+  border-radius: calc(16 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(48 * var(--to-rem));
+    padding: calc(48 * var(--to-rem));
+  }
+}
+
+.p-message__image {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: calc(280 * var(--to-rem));
+  margin-inline: auto;
+  border-radius: calc(12 * var(--to-rem));
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  @include mq(md) {
+    width: calc(260 * var(--to-rem));
+    margin-inline: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.p-message__text {
+  font-size: calc(15 * var(--to-rem));
+  line-height: 2;
+  color: var(--color-text);
+  margin-bottom: calc(24 * var(--to-rem));
+
+  @include mq(md) {
+    font-size: calc(16 * var(--to-rem));
+  }
+}
+
+.p-message__name {
+  font-size: calc(14 * var(--to-rem));
+  line-height: 1.8;
+  color: var(--color-text);
+  text-align: right;
+
+  strong {
+    font-size: calc(16 * var(--to-rem));
+    font-weight: var(--fw-bold);
+  }
+}
+
+// 法人概要テーブル
+.p-corporate-table {
+  max-width: calc(700 * var(--to-rem));
+  margin-inline: auto;
+}

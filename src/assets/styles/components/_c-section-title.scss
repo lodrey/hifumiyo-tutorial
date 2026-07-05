@@ -1,0 +1,40 @@
+.c-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: clamp(60px, 8vw, 100px);
+  margin-bottom: clamp(40px, 6vw, 60px);
+
+  &__sub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.875rem;
+    margin-top: 20px;
+    color: var(--color-text-sub);
+    letter-spacing: 0.2em;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background-color: #ddd;
+    }
+  }
+}
+
+.c-section-title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-family: var(--title-font-family);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}

@@ -1,0 +1,270 @@
+@use "../global" as *;
+
+// アクセスページ
+.p-access-layout {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    gap: calc(48 * var(--to-rem));
+    align-items: flex-start;
+  }
+}
+
+.p-access-map {
+  flex: 0 0 auto;
+  width: 100%;
+  border-radius: calc(12 * var(--to-rem));
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  @include mq(md) {
+    width: 55%;
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: calc(300 * var(--to-rem));
+
+    @include mq(md) {
+      height: calc(420 * var(--to-rem));
+    }
+  }
+}
+
+.p-access-info {
+  flex: 1;
+}
+
+.p-access-info__name {
+  font-family: "Shippori Mincho", serif;
+  font-size: clamp(calc(18 * var(--to-rem)), 2.5vw, calc(22 * var(--to-rem)));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: calc(20 * var(--to-rem));
+  padding-bottom: calc(12 * var(--to-rem));
+  border-bottom: 2px solid var(--color-primary);
+  line-height: 1.4;
+
+  small {
+    display: block;
+    font-size: calc(12 * var(--to-rem));
+    font-weight: var(--fw-regular);
+    font-family: var(--base-font-family);
+    color: var(--color-text-sub);
+    margin-top: calc(4 * var(--to-rem));
+  }
+}
+
+.p-access-detail {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--to-rem));
+  margin-bottom: calc(28 * var(--to-rem));
+}
+
+.p-access-detail__item {
+  display: grid;
+  grid-template-columns: calc(110 * var(--to-rem)) 1fr;
+  gap: calc(8 * var(--to-rem));
+  align-items: baseline;
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: calc(6 * var(--to-rem));
+    font-size: calc(13 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-primary);
+
+    i {
+      width: calc(16 * var(--to-rem));
+      text-align: center;
+    }
+  }
+
+  dd {
+    font-size: calc(14 * var(--to-rem));
+    line-height: 1.8;
+    color: var(--color-text);
+
+    a {
+      color: var(--color-link);
+      text-decoration: none;
+
+      @media (any-hover: hover) {
+        &:hover { text-decoration: underline; }
+      }
+    }
+  }
+}
+
+.p-access-detail__map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(4 * var(--to-rem));
+  margin-top: calc(6 * var(--to-rem));
+  font-size: calc(13 * var(--to-rem));
+  color: var(--color-link) !important;
+}
+
+.p-access-transit {
+  background-color: var(--color-bg-sub);
+  border-radius: calc(10 * var(--to-rem));
+  padding: calc(20 * var(--to-rem));
+}
+
+.p-access-transit__title {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--to-rem));
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  margin-bottom: calc(12 * var(--to-rem));
+
+  i {
+    color: var(--color-primary);
+  }
+}
+
+.p-access-transit__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--to-rem));
+}
+
+.p-access-transit__item {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(10 * var(--to-rem));
+  font-size: calc(13 * var(--to-rem));
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.p-access-transit__label {
+  flex-shrink: 0;
+  display: inline-block;
+  padding: calc(2 * var(--to-rem)) calc(10 * var(--to-rem));
+  font-size: calc(11 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  border-radius: calc(4 * var(--to-rem));
+  color: var(--color-pure-white);
+
+  &--bus {
+    background-color: var(--color-primary);
+  }
+
+  &--car {
+    background-color: var(--color-text);
+  }
+}
+
+// 施設ごとのカード
+.p-access-facilities {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24 * var(--to-rem));
+
+  @include mq(md) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(24 * var(--to-rem));
+  }
+}
+
+.p-access-facility {
+  background-color: var(--color-pure-white);
+  border-radius: calc(12 * var(--to-rem));
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.p-access-facility__head {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--to-rem));
+  padding: calc(20 * var(--to-rem));
+  background-color: var(--color-bg-sub);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.p-access-facility__icon {
+  flex-shrink: 0;
+  width: calc(44 * var(--to-rem));
+  height: calc(44 * var(--to-rem));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(18 * var(--to-rem));
+  color: var(--color-pure-white);
+
+  &--orange { background-color: var(--color-primary); }
+  &--lime   { background-color: var(--color-lime); }
+  &--green  { background-color: var(--color-green); }
+}
+
+.p-access-facility__name {
+  font-size: calc(15 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1.5;
+
+  small {
+    display: block;
+    font-size: calc(11 * var(--to-rem));
+    font-weight: var(--fw-medium);
+    color: var(--color-text);
+    opacity: 0.6;
+    margin-top: calc(2 * var(--to-rem));
+  }
+}
+
+.p-access-facility__info {
+  padding: calc(20 * var(--to-rem));
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--to-rem));
+
+  div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: calc(6 * var(--to-rem)) calc(10 * var(--to-rem));
+    align-items: baseline;
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: calc(5 * var(--to-rem));
+    font-size: calc(12 * var(--to-rem));
+    font-weight: var(--fw-bold);
+    color: var(--color-primary);
+    white-space: nowrap;
+
+    i {
+      font-size: calc(11 * var(--to-rem));
+    }
+  }
+
+  dd {
+    font-size: calc(13 * var(--to-rem));
+    line-height: 1.7;
+    color: var(--color-text);
+
+    a {
+      color: var(--color-link);
+      text-decoration: none;
+
+      @media (any-hover: hover) {
+        &:hover { text-decoration: underline; }
+      }
+    }
+  }
+}

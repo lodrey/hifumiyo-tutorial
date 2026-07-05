@@ -1,0 +1,70 @@
+@use "../global" as *;
+
+// ============================================================
+// セクション間の「遊び心のある波線」区切り
+//   ・1本の波SVGを mask にして、--wave-color で色替え（DRY）
+//   ・上に小さなドットを散らして手描き風の遊び心をプラス
+//   使い方: <div class="c-wave-divider c-wave-divider--lime" aria-hidden="true"></div>
+// ============================================================
+.c-wave-divider {
+  --wave-color: var(--color-lime);
+  --wave-dot: var(--color-orange);
+
+  position: relative;
+  width: 100%;
+  height: calc(46 * var(--to-rem));
+  pointer-events: none;
+
+  @include mq(md) {
+    height: calc(60 * var(--to-rem));
+  }
+
+  // 波線本体：白ストロークの波SVGを mask にして色を敷く
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--wave-color);
+    opacity: 0.85;
+    -webkit-mask:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 24'%3E%3Cpath d='M0 12 C 20 2 40 2 60 12 S 100 22 120 12' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
+      repeat-x center / calc(150 * var(--to-rem)) 70%;
+    mask:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 24'%3E%3Cpath d='M0 12 C 20 2 40 2 60 12 S 100 22 120 12' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
+      repeat-x center / calc(150 * var(--to-rem)) 70%;
+  }
+
+  // 波のまわりに散らす小さな円ドット（遊び心）
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at calc(40 * var(--to-rem)) 24%, var(--wave-dot) calc(4 * var(--to-rem)), transparent calc(4.5 * var(--to-rem))),
+      radial-gradient(circle at calc(112 * var(--to-rem)) 76%, var(--wave-color) calc(3.5 * var(--to-rem)), transparent calc(4 * var(--to-rem)));
+    background-repeat: repeat-x, repeat-x;
+    background-position: left center, left center;
+    background-size: calc(150 * var(--to-rem)) 100%, calc(150 * var(--to-rem)) 100%;
+  }
+}
+
+// カラーバリエーション（隣接セクションのテーマに合わせて使い分け）
+.c-wave-divider--lime {
+  --wave-color: var(--color-lime);
+  --wave-dot: var(--color-orange);
+}
+
+.c-wave-divider--green {
+  --wave-color: var(--color-green);
+  --wave-dot: var(--color-yellow);
+}
+
+.c-wave-divider--orange {
+  --wave-color: var(--color-orange);
+  --wave-dot: var(--color-lime);
+}
+
+.c-wave-divider--yellow {
+  --wave-color: var(--color-yellow);
+  --wave-dot: var(--color-green);
+}

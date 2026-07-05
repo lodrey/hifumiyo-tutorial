@@ -1,0 +1,51 @@
+@use "../global" as *;
+
+/* ==========================================================================
+   Background Wrapper
+   ========================================================================== */
+
+.l-bg-wrapper {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-bg-sub);
+
+  // ラッパー内のセクション間の調整が必要な場合
+  // 標準的な余白に戻す
+  padding-bottom: calc(100 * var(--to-rem));
+
+  @media screen and (max-width: 768px) {
+    padding-bottom: calc(60 * var(--to-rem));
+  }
+
+  /* 
+     装飾的な要素を背景に追加したい場合 
+     (例：左上に薄い色の円を配置するなど)
+  */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // 必要に応じてテクスチャを重ねる場合に使用
+    // background-repeat: no-repeat;
+    // background-position: top center;
+    // background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+// ラッパー内の特定のセクションだけ背景を透過させたい場合などの調整
+.p-about,
+.p-activities,
+.p-business,
+.p-news,
+.p-donation,
+.p-reports,
+.p-location,
+.p-contact {
+  background-color: transparent !important;
+}

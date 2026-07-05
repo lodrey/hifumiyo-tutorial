@@ -1,0 +1,155 @@
+@use "../global" as *;
+
+.p-reports {
+  padding-block: calc(60 * var(--to-rem));
+  background-color: var(--color-bg-white);
+
+  @include mq(md) {
+    padding-block: calc(100 * var(--to-rem));
+  }
+}
+
+.p-reports__content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--to-rem));
+}
+
+.p-reports__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.p-reports__sub-title {
+  font-size: calc(20 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  font-family: 'Shippori Mincho', serif;
+  line-height: 1.5;
+
+  @include mq(md) {
+    font-size: calc(24 * var(--to-rem));
+  }
+}
+
+.p-reports__btn {
+  font-size: calc(14 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: calc(5 * var(--to-rem));
+  transition: all 0.3s ease;
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+      padding-right: calc(10 * var(--to-rem));
+    }
+  }
+
+  &::after {
+    content: "→";
+    margin-left: 0.5em;
+  }
+}
+
+.p-reports__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(20 * var(--to-rem));
+
+  @include mq(md) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: calc(30 * var(--to-rem));
+  }
+}
+
+.p-reports__link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+
+  @media (any-hover: hover) {
+    &:hover .p-reports__thumbnail img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.p-reports__thumbnail {
+  position: relative;
+  aspect-ratio: 1 / 1.15; // 縦長すぎず、内容が綺麗に収まる比率に調整
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--color-white);
+  border: 1px solid #e0e0e0; // 既存のボーダー
+  border-radius: calc(20 * var(--to-rem)); // 20pxの角丸
+  transition: box-shadow 0.3s ease; // ホバー時の影のトランジション
+}
+
+.p-reports__img-wrap {
+  flex: 0 0 40%; // 上部画像エリアを4割に
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  overflow: hidden;
+
+  img {
+    width: 80%;
+    height: 60%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+}
+
+// ホバー時に薄い影を追加
+@media (any-hover: hover) {
+  .p-reports__link:hover .p-reports__thumbnail {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); // 薄い影
+  }
+}
+
+.p-reports__body {
+  flex: 0 0 60%; // 下部情報エリアを6割に
+  padding: calc(20 * var(--to-rem)) calc(15 * var(--to-rem));
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--to-rem));
+  z-index: 2;
+}
+
+.p-reports__meta {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--to-rem));
+}
+
+.p-reports__date {
+  font-size: calc(14 * var(--to-rem));
+  color: #888;
+  opacity: 1;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.p-reports__tag {
+  font-size: calc(12 * var(--to-rem));
+  padding: calc(3 * var(--to-rem)) calc(8 * var(--to-rem));
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-radius: calc(2 * var(--to-rem));
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.05em;
+}
+
+.p-reports__item-title {
+  font-size: calc(16 * var(--to-rem));
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  color: var(--color-text);
+}

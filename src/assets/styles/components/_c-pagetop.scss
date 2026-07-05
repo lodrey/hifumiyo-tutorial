@@ -1,0 +1,82 @@
+/* トップスクロールボタンの基本スタイル */
+.p-to-top {
+  position: fixed;
+  right: 1.875rem;
+  bottom: 3.125rem;
+  z-index: 100;
+  width: 6.25rem; /* 100px相当 */
+  height: 6.25rem; /* 100px相当 */
+  background-color: #fff; /* 背景色 */
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s, visibility 0.4s, transform 0.3s;
+  
+  /* 初期状態は非表示（ふわっと表示させるため） */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+
+  &::before {
+    content: "上へ戻る";
+    position: absolute;
+    top: -2.5rem; /* ボタンの円の外側（上）に配置 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem; /* 10px相当 */
+    font-weight: 700;
+    color: #444;
+    line-height: 1;
+    letter-spacing: .3em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+}
+
+.p-to-top img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* スクロール時に付与されるクラス */
+.p-to-top.is-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* フッターエリア突入時：「上へ戻る」文字をベースカラーに切り替え */
+.p-to-top.is-on-footer {
+  &::before {
+    color: var(--color-bg-main);
+    transition: color 0.3s;
+  }
+}
+
+/* ホバー時の演出 */
+.p-to-top:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .p-to-top {
+    right: 15px;
+    bottom: 15px;
+    width: 3.125rem; /* 50px相当 */
+    height: 3.125rem; /* 50px相当 */
+    width: 5rem; /* 50px相当 */
+    height: 5rem; /* 50px相当 */
+
+    // &::before {
+    //   display: none; /* スマホ時は画像のみ表示 */
+    // }
+    img {
+      width: 70%;
+    }
+  }
+}
