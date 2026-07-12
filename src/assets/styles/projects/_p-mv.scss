@@ -44,7 +44,7 @@
   left: 50%; // モバイルでは画面中央に配置
   transform: translateX(-50%);
   z-index: 2;
-  width: clamp(calc(140 * var(--to-rem)), 35vw, calc(180 * var(--to-rem))); // モバイル時のサイズを流動的に
+  width: max-content; // 縦書きテキストの実寸に合わせる
   max-width: 80%; // 画面幅が狭い場合でも範囲内に収める
   opacity: 0; // 初期状態を透明に
   animation: fv-title-fade 1.6s ease-out 0.6s forwards; // 0.6秒後にフェードイン開始
@@ -52,19 +52,54 @@
   @include mq("md") {
     top: calc(80 * var(--to-rem));
     left: calc(50% + calc(200 * var(--to-rem))); // PCでは中央から200px右に調整
-    width: calc(230 * var(--to-rem)); // PCではサイズを適切に大きく
     max-width: 40%;
   }
 }
 
 .p-mv__main-title {
-  line-height: 0;
+  display: block;
+}
 
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
+// 3列を横に並べる。row-reverse で DOM 上の1列目（一人一人の、）を右端に配置
+.p-mv__verse {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: clamp(calc(14 * var(--to-rem)), 4vw, calc(28 * var(--to-rem)));
+}
+
+.p-mv__line {
+  writing-mode: vertical-rl; // 縦書き（上→下、列は右→左）
+  text-orientation: upright; // 日本語文字を正立させる
+  font-family: var(--copy-font-family); // Kurenaido
+  font-weight: var(--fw-bold);
+  font-size: clamp(calc(30 * var(--to-rem)), 9vw, calc(42 * var(--to-rem))); // 1.5倍
+  line-height: 1;
+  letter-spacing: 0.5em; // 縦方向（文字と文字）の間隔
+  color: var(--color-pure-white);
+  // 写真背景の上でも視認できるよう、白文字にうっすらとした輪郭と柔らかい影を添える
+  -webkit-text-stroke: calc(0.6 * var(--to-rem)) rgba(58, 58, 58, 0.35);
+  text-shadow: 0 calc(2 * var(--to-rem)) calc(10 * var(--to-rem)) rgba(0, 0, 0, 0.35);
+
+  @include mq("md") {
+    font-size: calc(35 * var(--to-rem));
   }
+}
+
+// 各列の開始位置を段々下げて、右上→左下の流れをつくる
+.p-mv__line--1 {
+  margin-top: 0;
+}
+
+.p-mv__line--2 {
+  margin-top: clamp(calc(16 * var(--to-rem)), 6vh, calc(40 * var(--to-rem)));
+}
+
+.p-mv__line--3 {
+  margin-top: clamp(calc(40 * var(--to-rem)), 16vh, calc(110 * var(--to-rem)));
+  margin-top: clamp(calc(60 * var(--to-rem)), 24vh, calc(165 * var(--to-rem)));
+  margin-top: clamp(calc(90 * var(--to-rem)), 36vh, calc(247.5 * var(--to-rem)));
+  // margin-top: clamp(calc(72 * var(--to-rem)), 28.8vh, calc(198 * var(--to-rem)));
 }
 
 .p-mv__slider {
