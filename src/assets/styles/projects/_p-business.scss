@@ -92,7 +92,7 @@
   border-radius: calc(8 * var(--to-rem));
 
   @include mq(md) {
-    // 放課後等デイサービス(3番目)を基準とし、左に向かって段階的に下げる
+    // 花咲か舎(3番目)を基準とし、左に向かって段階的に下げる
     &:nth-child(2) {
       margin-top: calc(30 * var(--to-rem));
     }

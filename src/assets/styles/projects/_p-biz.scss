@@ -243,7 +243,7 @@
 
   @include mq(md) {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
   }
 }
@@ -262,6 +262,7 @@
   @include mq(md) {
     flex: 1;
     padding: calc(32 * var(--to-rem)) calc(20 * var(--to-rem));
+    justify-content: center;
 
     & + &::before {
       content: "▶";
@@ -293,17 +294,34 @@
 .p-steps__title {
   font-size: calc(15 * var(--to-rem));
   font-weight: var(--fw-bold);
+  line-height: 1.5;
   color: var(--color-text);
 
   @include mq(md) {
     font-size: calc(16 * var(--to-rem));
+    // 01番（1行）を基準に4カードのタイトル高さを揃える
+    height: calc(24 * var(--to-rem));
   }
 }
 
-.p-steps__desc {
+.p-steps__text {
+  margin-top: calc(8 * var(--to-rem));
   font-size: calc(13 * var(--to-rem));
   line-height: 1.8;
   color: var(--color-text-sub);
+
+  @include mq(md) {
+    // 01番の文章量を基準に4カードの文章欄の高さを揃える
+    min-height: calc(72 * var(--to-rem));
+  }
+}
+
+// 03番は文章量が多いため、他のボックスとの高さ差を抑えるよう文字をやや縮小
+.p-steps__item:nth-child(3) .p-steps__text {
+  @include mq(md) {
+    font-size: calc(12 * var(--to-rem));
+    line-height: 1.6;
+  }
 }
 
 // FAQ
@@ -383,10 +401,14 @@
 // 料金テーブル
 .p-fee-table {
   width: 100%;
-  border-collapse: collapse;
   border-radius: calc(8 * var(--to-rem));
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
   th,
   td {
