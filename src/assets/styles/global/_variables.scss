@@ -72,11 +72,11 @@
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-bold: 700;
+  --fw-black: 900;
 
   /* font-family */
   --base-font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
   --title-font-family: "M PLUS Rounded 1c", sans-serif;
-  --copy-font-family: "Kurenaido", "Zen Maru Gothic", serif;
 
   // 16pxを基準として、1pxあたりのremを計算
   --to-rem: calc(tan(atan2(1px, var(--root-font-size))) * 1rem);
