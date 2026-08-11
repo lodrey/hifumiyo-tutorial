@@ -35,6 +35,7 @@
   padding: calc(3 * var(--to-rem)) calc(12 * var(--to-rem));
   border-radius: calc(2 * var(--to-rem));
   margin-bottom: calc(12 * var(--to-rem));
+  margin-left: var(--indent-text); // 見出し・本文と左端を揃える
 }
 
 .hana-section-title {
@@ -43,12 +44,17 @@
   font-weight: var(--fw-bold);
   color: var(--color-text);
   line-height: 1.45;
+
+  // 他ページの縦バー付き見出し（p-biz-section__title）と文字の左端を揃える。
+  // 下線はボーダーボックス全体に引かれるため、コンテナ左端から始まる。
   padding-bottom: calc(16 * var(--to-rem));
+  padding-left: var(--indent-text);
   border-bottom: 2px solid var(--color-border);
   margin-bottom: calc(16 * var(--to-rem));
 }
 
 .hana-section-lead {
+  padding-left: var(--indent-text); // 見出しの文字と左端を揃える
   font-size: calc(15 * var(--to-rem));
   line-height: 1.9;
   color: var(--color-text-sub);

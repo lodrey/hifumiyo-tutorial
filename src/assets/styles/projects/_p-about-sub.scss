@@ -66,7 +66,9 @@
   gap: calc(20 * var(--to-rem));
 
   @include mq(md) {
-    gap: calc(24 * var(--to-rem));
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(20 * var(--to-rem));
   }
 }
 
@@ -85,6 +87,14 @@
     flex-direction: row;
     align-items: flex-start;
     gap: calc(24 * var(--to-rem));
+  }
+
+  // md以上：4つを1列横並びにするため、カード内部は再び縦積みに戻す
+  @include mq(md) {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(16 * var(--to-rem));
   }
 
   @media (any-hover: hover) {

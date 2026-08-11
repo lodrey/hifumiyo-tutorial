@@ -108,7 +108,19 @@
     // PC: 元の並び順に戻す（歩歩 → 風の子めむろ → 花咲か舎）
     order: initial;
 
-    // 花咲か舎(3番目)を基準とし、左に向かって段階的に下げる
+    &:nth-child(1) {
+      order: initial;
+    }
+
+    &:nth-child(2) {
+      order: initial;
+    }
+
+    &:nth-child(3) {
+      order: initial;
+    }
+
+    // 歩歩(1番目)を基準とし、右に向かって段階的に上げる
     &:nth-child(2) {
       margin-top: calc(30 * var(--to-rem));
     }

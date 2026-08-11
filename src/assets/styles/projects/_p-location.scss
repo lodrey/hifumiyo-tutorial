@@ -102,15 +102,10 @@
 
 .p-location__info-group {
   display: flex;
-  /* SP: 法人概念が上に来るよう逆順 */
-  flex-direction: column-reverse;
-  gap: calc(24 * var(--to-rem));
+  flex-direction: column;
 
   @include mq(md) {
-    /* PC: 元の高さを打消し、横並びに */
     flex: 4.5;
-    flex-direction: row;
-    justify-content: flex-end;
   }
 }
 
@@ -165,19 +160,4 @@
   }
 }
 
-.p-location__sub-title {
-  /* SP: 横書き */
-  font-family: 'Shippori Mincho', serif;
-  font-size: calc(20 * var(--to-rem));
-  font-weight: var(--fw-bold);
-  line-height: 1.5;
-  color: var(--color-text);
-
-  @include mq(md) {
-    /* PC: 縦書き */
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-size: calc(24 * var(--to-rem));
-  }
-}
 }

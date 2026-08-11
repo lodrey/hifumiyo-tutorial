@@ -14,6 +14,7 @@
 }
 
 .p-biz-section__header {
+  text-align: left;
   margin-bottom: calc(40 * var(--to-rem));
 
   @include mq(md) {
@@ -28,7 +29,7 @@
   color: var(--color-text);
   line-height: 1.5;
   position: relative;
-  padding-left: calc(16 * var(--to-rem));
+  padding-left: var(--indent-text);
 
   &::before {
     content: "";
@@ -36,7 +37,7 @@
     left: 0;
     top: 0.1em;
     bottom: 0.1em;
-    width: 4px;
+    width: var(--indent-bar-width);
     background-color: var(--color-primary);
     border-radius: 2px;
   }
@@ -44,6 +45,7 @@
 
 .p-biz-section__lead {
   margin-top: calc(16 * var(--to-rem));
+  padding-left: var(--indent-text); // 見出しの文字と左端を揃える
   font-size: calc(15 * var(--to-rem));
   line-height: 1.9;
   color: var(--color-text);

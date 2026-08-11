@@ -108,13 +108,14 @@ $dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 // div: relative z-10 max-w-7xl mx-auto px-8 w-full
+// → サイト共通の .l-inner と同じ横幅・余白に統一（文字の左端をサイト全体で揃えるため）
 .p-donation-hero__inner {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: calc(1280 * var(--to-rem)); // max-w-7xl
+  max-width: calc(var(--inner) + var(--padding-inner) * 2);
   margin-inline: auto;
-  padding-inline: calc(32 * var(--to-rem)); // px-8
+  padding-inline: var(--padding-inner);
 }
 
 // div: max-w-2xl space-y-8
@@ -236,11 +237,11 @@ $dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
 
-// div: max-w-7xl mx-auto px-8
+// div: max-w-7xl mx-auto px-8 → .l-inner と統一
 .p-donation-activity__inner {
-  max-width: calc(1280 * var(--to-rem)); // max-w-7xl
+  max-width: calc(var(--inner) + var(--padding-inner) * 2);
   margin-inline: auto;
-  padding-inline: calc(32 * var(--to-rem)); // px-8
+  padding-inline: var(--padding-inner);
 }
 
 // div: text-center mb-20
@@ -376,11 +377,11 @@ $dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   background-color: $dn-surface;
 }
 
-// div: max-w-4xl mx-auto px-8 text-center space-y-12
+// div: max-w-4xl mx-auto px-8 text-center space-y-12 → .l-inner と統一
 .p-donation-gift__inner {
-  max-width: calc(896 * var(--to-rem)); // max-w-4xl
+  max-width: calc(var(--inner) + var(--padding-inner) * 2);
   margin-inline: auto;
-  padding-inline: calc(32 * var(--to-rem)); // px-8
+  padding-inline: var(--padding-inner);
   text-align: center;
 
   > * + * {
@@ -502,9 +503,9 @@ $dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 .p-donation-consult__inner {
   position: relative;
   z-index: 10;
-  max-width: calc(1152 * var(--to-rem)); // max-w-6xl
+  max-width: calc(var(--inner) + var(--padding-inner) * 2);
   margin-inline: auto;
-  padding-inline: calc(32 * var(--to-rem)); // px-8
+  padding-inline: var(--padding-inner);
   display: grid;
   grid-template-columns: 1fr;
   gap: calc(64 * var(--to-rem)); // gap-16
@@ -713,11 +714,11 @@ $dn-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   background-color: $dn-surface-container-lowest;
 }
 
-// div: max-w-3xl mx-auto px-8
+// div: max-w-3xl mx-auto px-8 → .l-inner と統一
 .p-donation-contact__inner {
-  max-width: calc(768 * var(--to-rem)); // max-w-3xl
+  max-width: calc(var(--inner) + var(--padding-inner) * 2);
   margin-inline: auto;
-  padding-inline: calc(32 * var(--to-rem)); // px-8
+  padding-inline: var(--padding-inner);
 }
 
 // div: text-center mb-16 space-y-4

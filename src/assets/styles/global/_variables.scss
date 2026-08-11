@@ -18,6 +18,13 @@
   --inner-sp: min(500px, 100%);
   --padding-inner: 20px;
 
+  /* text indent
+     縦バー付き見出し（p-biz-section__title / p-donation__sub-title など）の
+     インデント量とバー幅。見出しの文字とリード文・本文の左端を揃えるため、
+     同じセクション内のテキストは全て --indent-text を基準にする。 */
+  --indent-bar-width: 4px;
+  --indent-text: calc(16 * var(--to-rem));
+
   /* z-index */
   --z-index-header: 900;
 

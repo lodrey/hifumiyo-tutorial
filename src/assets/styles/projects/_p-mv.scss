@@ -40,28 +40,21 @@
 
 .p-mv__title-wrap {
   position: absolute;
-  top: clamp(calc(0 * var(--to-rem)), 8vh, calc(32 * var(--to-rem))); // 画面高さに合わせて上部余白をレスポンシブに
-  right: calc(-45 * var(--to-rem)); // スマホは右上寄せ。端に寄りすぎないよう余白を確保
+  bottom: 25%; // SP: ファーストビュー下から4割の高さ
+  left: 15%; // SP: 左に40%の余白を確保して左寄せ
   z-index: 2;
-  width: max-content; // 縦書きテキストの実寸に合わせる
-  max-width: 80%; // 画面幅が狭い場合でも範囲内に収める
+  width: max-content;
+  max-width: calc(100% - 19% - var(--padding-inner)); // leftのオフセット分を差し引いた残り幅（各行が改行されないための余裕）
   opacity: 0; // 初期状態を透明に
-  animation: fv-title-fade 1.6s ease-out 0.6s forwards; // 0.6秒後にフェードイン開始
-  // 写真背景から文字を浮かせて視認性を高める半透明パネル
-  padding: calc(15 * var(--to-rem)) calc(20 * var(--to-rem));
-  background: linear-gradient(160deg, rgba(58, 58, 58, 0.18), rgba(58, 58, 58, 0.08));
-  backdrop-filter: blur(calc(5 * var(--to-rem)));
-  -webkit-backdrop-filter: blur(calc(5 * var(--to-rem)));
-  border-radius: calc(16 * var(--to-rem));
-  box-shadow: 0 calc(8 * var(--to-rem)) calc(24 * var(--to-rem)) rgba(0, 0, 0, 0.18);
+  animation: fv-title-fade 1.6s ease-out 0.6s forwards; // 0.
 
   @include mq("md") {
     top: calc(20 * var(--to-rem));
-    right: auto;
+    bottom: auto;
     left: calc(50% + calc(200 * var(--to-rem))); // PCでは中央から200px右に調整
     transform: translateX(-50%);
     max-width: 40%;
-    padding: calc(36 * var(--to-rem)) calc(26 * var(--to-rem));
+    animation-name: fv-title-fade-pc; // PCのみ中央寄せ分のtranslateXを含むキーフレームに切り替え
   }
 }
 
@@ -69,46 +62,65 @@
   display: block;
 }
 
-// 3列を横に並べる。row-reverse で DOM 上の1列目（一人一人の、）を右端に配置
+// SP: 横書きで上から下へ通常の行の流れで積む
+// PC: 縦書き3列を横に並べる（row-reverse で DOM 上の1列目「一人一人の、」を右端に配置）
 .p-mv__verse {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   align-items: flex-start;
-  gap: clamp(calc(14 * var(--to-rem)), 4vw, calc(28 * var(--to-rem)));
-}
-
-.p-mv__line {
-  writing-mode: vertical-rl; // 縦書き（上→下、列は右→左）
-  text-orientation: upright; // 日本語文字を正立させる
-  font-family: var(--title-font-family); // M PLUS Rounded 1c
-  font-weight: var(--fw-black);
-  font-size: clamp(calc(14 * var(--to-rem)), 4.2vw, calc(19.6 * var(--to-rem))); // スマホはさらに0.7倍縮小
-  line-height: 1;
-  letter-spacing: 0.5em; // 縦方向（文字と文字）の間隔
-  color: var(--color-pure-white);
-  // 写真背景の上でも視認できるよう、白文字にうっすらとした輪郭と柔らかい影を添える
-  -webkit-text-stroke: calc(0.6 * var(--to-rem)) rgba(58, 58, 58, 0.35);
-  text-shadow: 0 calc(2 * var(--to-rem)) calc(10 * var(--to-rem)) rgba(0, 0, 0, 0.35);
+  gap: calc(4 * var(--to-rem));
 
   @include mq("md") {
-    font-size: calc(35 * var(--to-rem));
-    font-size: calc(40 * var(--to-rem));
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: clamp(calc(14 * var(--to-rem)), 4vw, calc(28 * var(--to-rem)));
   }
 }
 
-// 各列の開始位置を段々下げて、右上→左下の流れをつくる
+.p-mv__line {
+  writing-mode: horizontal-tb; // SP: 横書き
+  text-orientation: mixed;
+  font-family: var(--title-font-family); // M PLUS Rounded 1c
+  font-weight: var(--fw-black);
+  font-size: calc(35 * var(--to-rem)); // PCと同じサイズ
+  line-height: 1.3;
+  letter-spacing: 0.05em; // 横書き用の文字間隔
+  text-align: left;
+  white-space: nowrap; // 途中で改行させない
+  color: var(--color-bg-main); // 中はオフホワイト
+  // 写真背景の上でも視認できるよう、フチを濃いオレンジで太めに縁取る（PCと共通）
+  -webkit-text-stroke: calc(2.5 * var(--to-rem)) var(--color-orange);
+  text-shadow: 0 calc(2 * var(--to-rem)) calc(10 * var(--to-rem)) rgba(0, 0, 0, 0.35);
+
+  @include mq("md") {
+    writing-mode: vertical-rl; // PC: 縦書き（上→下、列は右→左）
+    text-orientation: upright; // 日本語文字を正立させる
+    letter-spacing: 0.5em; // 縦方向（文字と文字）の間隔
+    line-height: 1;
+    text-align: right;
+  }
+}
+
+// PC: 各列の開始位置を段々下げて、右上→左下の流れをつくる（SPは通常の行送りのため不要）
 .p-mv__line--1 {
   margin-top: 0;
 }
 
+// SP: 1行目「一人一人の、」を基準に、1行ごとに10pxずつ右にずらす
 .p-mv__line--2 {
-  margin-top: clamp(calc(16 * var(--to-rem)), 6vh, calc(40 * var(--to-rem)));
+  transform: translateX(calc(25 * var(--to-rem)));
+
+  @include mq("md") {
+    transform: none;
+    margin-top: clamp(calc(16 * var(--to-rem)), 6vh, calc(40 * var(--to-rem)));
+  }
 }
 
 .p-mv__line--3 {
-  margin-top: clamp(calc(60 * var(--to-rem)), 24vh, calc(165 * var(--to-rem))); // スマホは1.5倍上昇（PC比 1/1.5）
+  transform: translateX(calc(150 * var(--to-rem)));
 
   @include mq("md") {
+    transform: none;
     margin-top: clamp(calc(90 * var(--to-rem)), 36vh, calc(247.5 * var(--to-rem)));
   }
 }
@@ -231,8 +243,20 @@
   100% { opacity: 0; }
 }
 
-// キャッチコピー用のフェードインアニメーション
+// キャッチコピー用のフェードインアニメーション（SP: 右寄せのためtranslateXなし）
 @keyframes fv-title-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(15px); // 少し下から
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// PC用：left:50%起点の中央寄せ分のtranslateX(-50%)を含める
+@keyframes fv-title-fade-pc {
   0% {
     opacity: 0;
     transform: translateX(-50%) translateY(15px); // 少し下から

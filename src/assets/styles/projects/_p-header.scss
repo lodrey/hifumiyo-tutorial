@@ -15,7 +15,7 @@
   justify-content: space-between;
   align-items: center;
   height: inherit;
-  padding-inline: calc(16 * var(--to-rem));
+  padding-inline: var(--padding-inner); // SP: 本文（.l-inner）と左右の余白を揃える
 
   @include mq("md") {
     justify-content: center;

@@ -28,6 +28,27 @@
       flex-direction: row-reverse;
     }
   }
+
+  // 指針セクションを画像の下に回り込ませるカード（花咲か舎）
+  &--has-guidelines {
+    @include mq(md) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
+// 画像とリード文をまとめる行（指針セクションはこの外側・下に配置）
+.p-business-card__main {
+  display: flex;
+  flex-direction: column;
+  gap: calc(32 * var(--to-rem));
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(48 * var(--to-rem));
+  }
 }
 
 .p-business-card__image {
@@ -73,6 +94,13 @@
 
 .p-business-card__body {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--to-rem));
+}
+
+// 指針セクション（画像の下に回り込む全幅ブロック）
+.p-business-card__guidelines {
   display: flex;
   flex-direction: column;
   gap: calc(16 * var(--to-rem));
@@ -172,115 +200,6 @@
 
   &--x-twitter {
     background-color: #000000;
-  }
-}
-
-// 花咲か舎 サービス詳細グリッド
-.p-business-card__detail-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: calc(16 * var(--to-rem));
-
-  @include mq(sm) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-// 3つの支援区分をタイトル主役で見せるカード。
-// アイコンを円形グラデーションバッジにし、テーマ色（緑／ライム／橙）で個性づけ。
-.p-business-card__detail-item {
-  --theme: var(--color-green);
-  --theme-bg: var(--color-green-light);
-
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(16 * var(--to-rem));
-  min-height: calc(150 * var(--to-rem));
-  padding: calc(28 * var(--to-rem)) calc(16 * var(--to-rem));
-  text-align: center;
-  background:
-    radial-gradient(120% 90% at 50% -10%, var(--theme-bg) 0%, transparent 60%),
-    var(--color-pure-white);
-  border: 1px solid oklch(from var(--theme) l c h / 22%);
-  border-radius: calc(16 * var(--to-rem));
-  box-shadow: 0 6px 20px oklch(from var(--theme) l c h / 10%);
-  transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
-
-  // 右上に浮かぶ装飾の光
-  &::before {
-    content: "";
-    position: absolute;
-    top: calc(-40 * var(--to-rem));
-    right: calc(-40 * var(--to-rem));
-    width: calc(120 * var(--to-rem));
-    height: calc(120 * var(--to-rem));
-    border-radius: 50%;
-    background: radial-gradient(circle, oklch(from var(--theme) l c h / 18%) 0%, transparent 70%);
-    z-index: -1;
-  }
-
-  &:nth-child(2) {
-    --theme: var(--color-lime);
-    --theme-bg: var(--color-lime-light);
-  }
-
-  &:nth-child(3) {
-    --theme: var(--color-orange);
-    --theme-bg: var(--color-orange-light);
-  }
-
-  @media (any-hover: hover) {
-    &:hover {
-      transform: translateY(-6px);
-      border-color: oklch(from var(--theme) l c h / 45%);
-      box-shadow: 0 16px 36px oklch(from var(--theme) l c h / 22%);
-    }
-  }
-}
-
-.p-business-card__detail-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: calc(14 * var(--to-rem));
-  font-size: calc(16 * var(--to-rem));
-  font-weight: var(--fw-bold);
-  line-height: 1.5;
-  color: var(--color-text);
-  letter-spacing: 0.02em;
-
-  // アイコンを円形グラデーションバッジに
-  i {
-    display: grid;
-    place-items: center;
-    width: calc(58 * var(--to-rem));
-    height: calc(58 * var(--to-rem));
-    border-radius: 50%;
-    background: linear-gradient(140deg, var(--theme) 0%, oklch(from var(--theme) calc(l - 0.1) c h) 100%);
-    color: var(--color-pure-white);
-    font-size: calc(24 * var(--to-rem));
-    box-shadow: 0 8px 18px oklch(from var(--theme) l c h / 40%);
-  }
-
-  // タイトル下の短いアクセントライン
-  &::after {
-    content: "";
-    width: calc(28 * var(--to-rem));
-    height: calc(3 * var(--to-rem));
-    border-radius: 9999px;
-    background: var(--theme);
-  }
-
-  @include mq(md) {
-    font-size: calc(17 * var(--to-rem));
   }
 }
 
