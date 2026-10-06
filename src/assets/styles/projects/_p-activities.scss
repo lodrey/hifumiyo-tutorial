@@ -227,3 +227,15 @@
   transition: color 0.3s ease;
   z-index: 1;
 }
+
+// SNS埋め込み（Facebookページプラグイン）: 16:9の枠内に収め、はみ出しは非表示
+.p-activities__thumbnail--embed {
+  background-color: var(--color-pure-white);
+
+  .fb-page,
+  .fb-page > span,
+  .fb-page iframe {
+    display: block;
+    width: 100% !important;
+  }
+}

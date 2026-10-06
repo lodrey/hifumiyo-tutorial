@@ -131,19 +131,21 @@
         <p class="p-activities__note">日々の活動<br>を配信中！</p>
       </div>
       <div class="p-activities__list">
-        <!-- Facebook -->
-        <a href="#" class="p-activities__item">
+        <!-- Facebook（ページプラグインで最新投稿を自動表示） -->
+        <div class="p-activities__item">
           <div class="p-activities__label">
             <i class="fab fa-facebook"></i>
             <span>Facebook</span>
           </div>
-          <div class="p-activities__thumbnail">
-            <img src="./assets/images/dummy/sns-fb.webp">
-            <i class="fa-solid fa-circle-arrow-right p-activities__arrow"></i>
+          <div class="p-activities__thumbnail p-activities__thumbnail--embed">
+            <div class="fb-page" data-href="https://www.facebook.com/hanasakasha.obihiro" data-tabs="timeline" data-width="500" data-height="400" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false"></div>
+            <a href="https://www.facebook.com/hanasakasha.obihiro/photos?locale=ja_JP" class="p-activities__arrow" target="_blank" rel="noopener noreferrer" aria-label="Facebookを開く">
+              <i class="fa-solid fa-circle-arrow-right"></i>
+            </a>
           </div>
-        </a>
+        </div>
         <!-- Instagram -->
-        <a href="#" class="p-activities__item">
+        <a href="https://www.instagram.com/hanasakasha_obihiro/?hl=ja" class="p-activities__item" target="_blank" rel="noopener noreferrer">
           <div class="p-activities__label">
             <i class="fab fa-instagram"></i>
             <span>Instagram</span>
